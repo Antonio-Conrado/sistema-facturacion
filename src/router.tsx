@@ -1,8 +1,70 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
+//context
+import AuthProvider from './context/AuthContext';
+import NotificationProvider from './context/NotificationContext';
+//validate if has access to route with role
+import ValidateRole from './components/authRole/ValidateRole';
+//layouts
+import AuthLayouts from './layouts/AuthLayouts';
+import AppLayouts from './layouts/AppLayout';
+// views 401 && 404
+import Views404 from './views/Views404';
+import Views401 from './views/Views401';
+//views Auth
+import LoginViews from './views/auth/LoginViews';
+import RegisterViews from './views/auth/RegisterViews';
+import ForgotPasswordViews from './views/auth/ForgotPasswordViews';
+import ResetPasswordViews from './views/auth/ResetPassword';
+import ConfirmAccountViews from './views/auth/ConfirmAccountViews';
+// views App
+import DashboardViews from './views/app/DashboardViews';
+import SalesViews from './views/app/sales/SalesViews';
+
 
 export default function Router() {
     return (
-        <>
-            <div className="text-red-500">Sistema</div>
-        </>
+        <NotificationProvider>
+            <BrowserRouter>
+                <AuthProvider>
+                    <Routes>
+
+                        {/* AUTHENTICATION */}
+                        <Route element={<AuthLayouts />}>
+                            <Route path='/login' element={<LoginViews />} />
+                            <Route path='/registrar' element={<RegisterViews />} />
+                            <Route path='/olvide-password' element={<ForgotPasswordViews />} />
+                            <Route path='/confirmar-cuenta' element={<ConfirmAccountViews />} />
+                            <Route path='/resetear-password' element={<ResetPasswordViews />} />
+                        </Route>
+
+                        {/* APP */}
+                        <Route path='/' element={<AppLayouts />}>
+                            {/* dashboard views */}
+                            <Route index element={
+                                <ValidateRole roles={[1]}>
+                                    <DashboardViews />
+                                </ValidateRole>
+                            } />
+
+                            {/* sales */}
+                            <Route path='/ventas' element={
+                                <ValidateRole roles={[1, 2]}>
+                                    <SalesViews />
+                                </ValidateRole>
+                            } />
+
+                        </Route>
+
+                        {/* views alternatives */}
+                        <Route element={<AppLayouts />}>
+                            <Route path="*" element={<Views404 />} />
+                            <Route path='/401' element={<Views401 />} />
+                        </Route>
+
+                    </Routes>
+                </AuthProvider>
+            </BrowserRouter>
+        </NotificationProvider>
     );
 }
