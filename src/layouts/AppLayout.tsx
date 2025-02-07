@@ -1,35 +1,60 @@
-
-import { Navigate, Outlet } from "react-router-dom";
-import Spinner from "@/components/Utils/Spinner";
-import useAuth from "@/hooks/useAuth";
-import TemporaryDrawer from "@/components/Utils/SideBar";
+import { Navigate, Outlet } from 'react-router-dom';
+import Spinner from '@/components/Utils/Spinner';
+import useAuth from '@/hooks/useAuth';
+import Nav from '@/components/Utils/Nav';
+import SideBar from '@/components/SideBar/SideBar';
+import { useEffect, useState } from 'react';
 
 export default function AppLayouts() {
     const { userAuth, loading, isError } = useAuth();
+    const [isLargeScreen, setIsLargeScreen] = useState(
+        window.innerWidth > 1024,
+    );
+    const [isOpenSideBar, setIsOpenSideBar] = useState(false);
 
-    if (isError) return <Navigate to="/login" />//invalid token
+    //show sidebar
+    useEffect(() => {
+        const handleResize = () => {
+            setIsLargeScreen(window.innerWidth > 1024);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    //fetch
+    if (isError) return <Navigate to="/login" />;
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center ">
+            <div className="min-h-screen flex items-center justify-center">
                 <Spinner />
             </div>
-        )
+        );
     }
-    if (userAuth.id > 0) return (
-        <div className="min-h-screen px-0">
-            {userAuth.status ? (
-                <div className="flex">
-                    <TemporaryDrawer />
-                    <div className="px-5 bg-white  min-h-screen flex-1">
-                        <Outlet />
+
+    if (userAuth.id > 0)
+        return (
+            <>
+                <div>
+                    {/* Sidebar */}
+                    <SideBar
+                        setIsOpenSideBar={setIsOpenSideBar}
+                        isLargeScreen={isLargeScreen}
+                        isOpenSideBar={isOpenSideBar}
+                    />
+
+                    <div className={`${isLargeScreen ? 'ml-[245px]' : 'ml-0'}`}>
+                        <Nav
+                            toggleSidebar={() =>
+                                setIsOpenSideBar(!isOpenSideBar)
+                            }
+                            isLargeScreen={isLargeScreen}
+                        />
+                        <main className="mt-20 p-5">
+                            <Outlet />
+                        </main>
                     </div>
                 </div>
-
-
-            ) :
-                <Navigate to="/login" />
-            }
-        </div>
-    );
-
+            </>
+        );
 }
