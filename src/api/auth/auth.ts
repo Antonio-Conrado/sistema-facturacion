@@ -1,5 +1,5 @@
 import api from "@/config/axios"
-import { AuthForm, ResponseMsgAPI, UserAuthSchema, UserResetPasswordType } from "@/types/index"
+import { AuthForm, ResponseMsgAPI, UserAuthSchema } from "@/types/index"
 import { isAxiosError } from "axios"
 
 export async function registerAccount(formData: AuthForm) {
@@ -70,7 +70,7 @@ export async function validateToken(token: AuthForm['token']) {
     }
 }
 
-export async function resetPasswordByToken({ formData, token }: { formData: UserResetPasswordType, token: string }) {
+export async function resetPasswordByToken({ formData, token }: { formData: AuthForm, token: string }) {
     const {password} = formData
     try {
         const { data } = await api.post<ResponseMsgAPI>(`/auth/reset-password/`, {password, token} )
