@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 //context
 import AuthProvider from './context/AuthContext';
@@ -20,7 +20,7 @@ import ConfirmAccountViews from './views/auth/ConfirmAccountViews';
 // views App
 import DashboardViews from './views/app/DashboardViews';
 import SalesViews from './views/app/sales/SalesViews';
-
+import BusinessDataView from './views/app/businessData/BusinessDataView';
 
 export default function Router() {
     return (
@@ -28,40 +28,65 @@ export default function Router() {
             <BrowserRouter>
                 <AuthProvider>
                     <Routes>
-
                         {/* AUTHENTICATION */}
                         <Route element={<AuthLayouts />}>
-                            <Route path='/login' element={<LoginViews />} />
-                            <Route path='/registrar' element={<RegisterViews />} />
-                            <Route path='/olvide-password' element={<ForgotPasswordViews />} />
-                            <Route path='/confirmar-cuenta' element={<ConfirmAccountViews />} />
-                            <Route path='/resetear-password' element={<ResetPasswordViews />} />
+                            <Route path="/login" element={<LoginViews />} />
+                            <Route
+                                path="/registrar"
+                                element={<RegisterViews />}
+                            />
+                            <Route
+                                path="/olvide-password"
+                                element={<ForgotPasswordViews />}
+                            />
+                            <Route
+                                path="/confirmar-cuenta"
+                                element={<ConfirmAccountViews />}
+                            />
+                            <Route
+                                path="/resetear-password"
+                                element={<ResetPasswordViews />}
+                            />
                         </Route>
 
                         {/* APP */}
-                        <Route path='/' element={<AppLayouts />}>
+                        <Route path="/" element={<AppLayouts />}>
                             {/* dashboard views */}
-                            <Route index element={
-                                <ValidateRole roles={[1]}>
-                                    <DashboardViews />
-                                </ValidateRole>
-                            } />
+                            <Route
+                                index
+                                element={
+                                    <ValidateRole roles={[1]}>
+                                        <DashboardViews />
+                                    </ValidateRole>
+                                }
+                            />
 
                             {/* sales */}
-                            <Route path='/ventas' element={
-                                <ValidateRole roles={[1, 2]}>
-                                    <SalesViews />
-                                </ValidateRole>
-                            } />
+                            <Route
+                                path="/ventas"
+                                element={
+                                    <ValidateRole roles={[1, 2]}>
+                                        <SalesViews />
+                                    </ValidateRole>
+                                }
+                            />
 
+                            {/* business Data */}
+                            <Route
+                                path="/configuracion/datos-negocio"
+                                element={
+                                    <ValidateRole roles={[1]}>
+                                        <BusinessDataView />
+                                    </ValidateRole>
+                                }
+                            />
                         </Route>
 
                         {/* views alternatives */}
                         <Route element={<AppLayouts />}>
                             <Route path="*" element={<Views404 />} />
-                            <Route path='/401' element={<Views401 />} />
+                            <Route path="/401" element={<Views401 />} />
                         </Route>
-
                     </Routes>
                 </AuthProvider>
             </BrowserRouter>
