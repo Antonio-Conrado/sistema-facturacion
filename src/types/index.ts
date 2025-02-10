@@ -36,17 +36,16 @@ export const BusinessDataSchema = z.object({
     ruc: z.string(),
     name: z.string(),
     description: z.string(),
+    direction: z.string(),
     telephone: z.string(),
     email: z.string().email().nullable(),
-    image: z.string().nullable(),
+    image: z.string().nullable().optional(),
 });
 
 export type BusinessData = z.infer<typeof BusinessDataSchema>;
 
 //schema and type generals
-export type ResponseMsgAPI = {
-    msg: string;
-};
+export const ResponseMsgAPISchema = z.string();
 
 export type LinksSideBar = {
     name: string;
