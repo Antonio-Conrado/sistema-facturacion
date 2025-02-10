@@ -17,8 +17,7 @@ export default function LinksSideBar() {
     const [open, setOpen] = useState<string | null>(null);
     const location = useLocation();
     const queryClient = useQueryClient();
-    const userRol: User | undefined = queryClient.getQueryData(['user']); // Get user role from cache
-
+    const userRol = queryClient.getQueryData<User>(['user']); // Get user role from cache
     // Handle submenu toggle
     const handleClick = (name: string) => {
         setOpen(open === name ? null : name);
