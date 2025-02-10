@@ -4,6 +4,9 @@ import useAuth from '@/hooks/useAuth';
 import Nav from '@/components/Utils/Nav';
 import SideBar from '@/components/SideBar/SideBar';
 import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { getBusinessDataAPI } from '@/api/businessData/businessData';
+import { getUser } from '@/api/user/user';
 
 export default function AppLayouts() {
     const { userAuth, loading, isError } = useAuth();
@@ -22,9 +25,24 @@ export default function AppLayouts() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useQuery({
+        queryKey: ['businessData'],
+        queryFn: getBusinessDataAPI,
+    });
+    const userData = useQuery({
+        queryKey: ['user'],
+        queryFn: () => getUser({ id: userAuth.id }),
+    });
     //fetch
     if (isError) return <Navigate to="/login" />;
     if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <Spinner />
+            </div>
+        );
+    }
+    if (userData.isLoading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <Spinner />
@@ -43,14 +61,18 @@ export default function AppLayouts() {
                         isOpenSideBar={isOpenSideBar}
                     />
 
-                    <div className={`${isLargeScreen ? 'ml-[245px]' : 'ml-0'}`}>
+                    <div
+                        className={`${
+                            isLargeScreen ? 'ml-[245px] mx-2' : 'mx-2'
+                        }`}
+                    >
                         <Nav
                             toggleSidebar={() =>
                                 setIsOpenSideBar(!isOpenSideBar)
                             }
                             isLargeScreen={isLargeScreen}
                         />
-                        <main className="mt-20 p-5">
+                        <main className="mt-20 py-5">
                             <Outlet />
                         </main>
                     </div>
