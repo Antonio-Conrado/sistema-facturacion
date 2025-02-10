@@ -1,22 +1,24 @@
-import { getBusinessDataAPI } from '@/api/businessData/businessData';
+import { BusinessData } from '@/types/index';
 import { Box } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function BusinesDataSideBar() {
-    const { data } = useQuery({
-        queryKey: ['businessData'],
-        queryFn: getBusinessDataAPI,
-    });
+    const queryClient = useQueryClient();
+    const data = queryClient.getQueryData<BusinessData>(['businessData']);
 
-    if (data)
+    if (!data) {
         return (
-            <Box className="mb-5">
-                <img
-                    src={data?.image ?? '/logo.png'}
-                    alt="image"
-                    className="h-20 w-full my-2"
-                />
-                <p className="text-white text-center text-2xl">{data.name}</p>
-            </Box>
+            <p className="text-white">Información del negocio no encontrada.</p>
         );
+    }
+    return (
+        <Box className="mb-5 flex flex-col items-center justify-center">
+            <img
+                src={data?.image ?? '/logo.png'}
+                alt="image"
+                className="h-20 w-fit my-2 rounded-full"
+            />
+            <p className="text-center text-2xl text-white">{data.name}</p>
+        </Box>
+    );
 }
