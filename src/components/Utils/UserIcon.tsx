@@ -2,9 +2,8 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { getUser } from '@/api/user/user';
-import useAuth from '@/hooks/useAuth';
+import { useQueryClient } from '@tanstack/react-query';
+import { User } from '@/types/index';
 
 export default function UserIcon() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -19,17 +18,13 @@ export default function UserIcon() {
 
     const queryClient = useQueryClient();
     const handleCloseSession = () => {
-        queryClient.invalidateQueries({ queryKey: ['userAuth'] });
         localStorage.removeItem('token');
+        queryClient.invalidateQueries({ queryKey: ['userAuth'] });
         queryClient.invalidateQueries({ queryKey: ['user'] });
     };
 
-    const { userAuth } = useAuth();
-    const { data } = useQuery({
-        queryKey: ['user'],
-        queryFn: () => getUser({ id: userAuth.id }),
-    });
-
+    //Fetch the user data from the cache
+    const data = queryClient.getQueryData<User>(['user']);
     if (data)
         return (
             <div className="flex items-center">
