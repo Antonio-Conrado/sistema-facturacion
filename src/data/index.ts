@@ -22,6 +22,7 @@ export const links: LinksSideBar[] = [
         name: 'Venta',
         path: '/ventas',
         icon: AttachMoney,
+        rol: ['administrador', 'empleado'],
         links: [
             {
                 name: 'Nueva Venta',
@@ -41,6 +42,7 @@ export const links: LinksSideBar[] = [
         name: 'Compras',
         path: '/compras',
         icon: AttachMoney,
+        rol: ['administrador', 'empleado'],
         links: [
             {
                 name: 'Nueva Compra',
@@ -67,6 +69,7 @@ export const links: LinksSideBar[] = [
         name: 'Catálogos',
         path: '/catalogos',
         icon: GridView,
+        rol: ['administrador', 'empleado'],
         links: [
             {
                 name: 'Proveedores',
@@ -92,6 +95,7 @@ export const links: LinksSideBar[] = [
         name: 'Configuración',
         path: '/configuracion',
         icon: Settings,
+        rol: ['administrador', 'empleado'],
         links: [
             {
                 name: 'Datos del Negocio',
