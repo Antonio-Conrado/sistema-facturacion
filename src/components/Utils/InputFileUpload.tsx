@@ -24,14 +24,21 @@ const VisuallyHiddenInput = styled('input')({
 type InputFileUploadProps = {
     text: string;
     infoCache: string;
-    mutationFn: MutationFunction<string | undefined, File>; // string for success message, File for the uploaded file
+    mutationFn: MutationFunction<
+        string | undefined,
+        { id?: number; file: File } // Aseguramos que siempre haya un archivo
+    >;
+    // string for success message, File for the uploaded file
+    id?: number;
 };
 export default function InputFileUpload({
     text,
     infoCache,
+    id,
     mutationFn,
 }: InputFileUploadProps) {
     const toast = useToast();
+    const fileInputRef = React.useRef<HTMLInputElement | null>(null);
     const queryClient = useQueryClient();
     const { mutate } = useMutation({
         mutationFn,
@@ -46,8 +53,15 @@ export default function InputFileUpload({
 
     const handleUploadFile = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
-        if (file) mutate(file);
+        if (!file) return;
+
+        mutate(id ? { id, file } : { file });
+        if (fileInputRef.current) {
+            // Clean the file input field
+            fileInputRef.current.value = '';
+        }
     };
+
     return (
         <Button
             component="label"
@@ -63,6 +77,7 @@ export default function InputFileUpload({
         >
             {text}
             <VisuallyHiddenInput
+                ref={fileInputRef}
                 type="file"
                 onChange={(event) => handleUploadFile(event)}
                 multiple
