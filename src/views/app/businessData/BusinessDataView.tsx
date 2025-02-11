@@ -3,7 +3,7 @@ import {
     uploadImageBusinessDataAPI,
 } from '@/api/businessData/businessData';
 import BusinessDataForm from '@/components/businessData/BusinessDataForm';
-import ErrorMessage from '@/components/Utils/ErrorMessage';
+import InputEmailsForm from '@/components/Utils/InputEmailForm';
 import InputFileUpload from '@/components/Utils/InputFileUpload';
 import PageTitle from '@/components/Utils/PageTitle';
 import useToast from '@/hooks/useNotifications';
@@ -68,32 +68,11 @@ export default function BusinessDataView() {
                             errors={errors}
                         />
 
-                        <div className="flex flex-row items- gap-3 text-gray-800">
-                            <label htmlFor="email" className="w-24">
-                                Email:
-                            </label>
-                            <div className="flex flex-col w-full">
-                                <input
-                                    id="email"
-                                    type="email"
-                                    className={`border rounded-md p-2 w-full ${
-                                        errors.email ? 'border-red-500' : ''
-                                    }`}
-                                    readOnly={isReadOnly}
-                                    {...register('email', {
-                                        pattern: {
-                                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                            message: 'Email inválido',
-                                        },
-                                    })}
-                                />
-                                {errors.email && (
-                                    <ErrorMessage>
-                                        {errors.email?.message?.toString()}
-                                    </ErrorMessage>
-                                )}
-                            </div>
-                        </div>
+                        <InputEmailsForm
+                            isReadOnly={isReadOnly}
+                            register={register}
+                            errors={errors}
+                        />
                         <div className="flex flex-col justify-center items-center gap-2">
                             <img
                                 src={info?.image || '/img/logo.png'}
