@@ -26,8 +26,8 @@ export const UserSchema = z.object({
     surname: z.string(),
     telephone: z.string().nullable(),
     email: z.string().email(),
-    image: z.string().nullable(),
-    roles: RolSchema,
+    image: z.string().nullable().optional(),
+    roles: RolSchema.optional(),
 });
 
 //schema and type businessData
