@@ -21,6 +21,7 @@ import ConfirmAccountViews from './views/auth/ConfirmAccountViews';
 import DashboardViews from './views/app/DashboardViews';
 import SalesViews from './views/app/sales/SalesViews';
 import BusinessDataView from './views/app/businessData/BusinessDataView';
+import UserView from './views/app/businessData/UserView';
 
 export default function Router() {
     return (
@@ -72,6 +73,14 @@ export default function Router() {
                             />
 
                             {/* business Data */}
+                            <Route
+                                path="/configuracion/informacion-personal"
+                                element={
+                                    <ValidateRole roles={[1, 2]}>
+                                        <UserView />
+                                    </ValidateRole>
+                                }
+                            />
                             <Route
                                 path="/configuracion/datos-negocio"
                                 element={
