@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { User } from '@/types/index';
 
 export default function UserIcon() {
@@ -23,8 +23,8 @@ export default function UserIcon() {
         queryClient.invalidateQueries({ queryKey: ['user'] });
     };
 
-    //Fetch the user data from the cache
-    const data = queryClient.getQueryData<User>(['user']);
+    //Fetch the user data
+    const { data } = useQuery<User>({ queryKey: ['user'] });
     if (data)
         return (
             <div className="flex items-center">
@@ -58,7 +58,7 @@ export default function UserIcon() {
                         <p className="font-bold text-sm">
                             Rol: {''}
                             <span className="font-normal capitalize">
-                                {data.roles.name}
+                                {data.roles?.name}
                             </span>
                         </p>
                     </MenuItem>
