@@ -19,6 +19,7 @@ export default function BusinessDataForm({
                 title="Nombre"
                 name="name"
                 msg="El nombre del negocio es obligatorio"
+                type="text"
                 isReadOnly={isReadOnly}
                 register={register}
                 errors={errors}
@@ -27,6 +28,7 @@ export default function BusinessDataForm({
                 title="Ruc"
                 name="ruc"
                 msg="El ruc del negocio es obligatorio"
+                type="text"
                 isReadOnly={isReadOnly}
                 register={register}
                 errors={errors}
@@ -35,6 +37,7 @@ export default function BusinessDataForm({
                 title="Dirección"
                 name="direction"
                 msg="La dirección del negocio es obligatorio"
+                type="text"
                 isReadOnly={isReadOnly}
                 register={register}
                 errors={errors}
@@ -43,6 +46,7 @@ export default function BusinessDataForm({
                 title="Teléfono"
                 name="telephone"
                 msg="El teléfono del negocio es obligatorio"
+                type="text"
                 isReadOnly={isReadOnly}
                 register={register}
                 errors={errors}
