@@ -32,11 +32,11 @@ export async function updateBusinessDataAPI(formData: BusinessData) {
     }
 }
 
-export async function uploadImageBusinessDataAPI(image: File) {
+export async function uploadImageBusinessDataAPI({ file }: { file: File }) {
     try {
         // Create a FormData object and append the image to the request body
         const formData = new FormData();
-        formData.append('image', image); // 'image' should match the field name in the backend
+        formData.append('image', file); // 'image' should match the field name in the backend
 
         const { data } = await api.post(
             '/businessData/upload-image',
@@ -52,6 +52,7 @@ export async function uploadImageBusinessDataAPI(image: File) {
             return result.data;
         }
     } catch (error) {
+        console.log(error);
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
         }
