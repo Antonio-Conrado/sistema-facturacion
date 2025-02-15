@@ -11,12 +11,27 @@ export const UserAuthSchema = z.object({
 export const RolSchema = z.object({
     name: z.string(),
 });
+export const RolesSchemaAPI = z.array(
+    z.object({
+        id: z.number(),
+        name: z.string(),
+        status: z.boolean(),
+    }),
+);
+export type Roles = z.infer<typeof RolesSchemaAPI>;
 
 export type User = z.infer<typeof UserSchema>;
+export type Users = z.infer<typeof UsersSchema>;
 export type AuthForm = Pick<
     User,
     'name' | 'surname' | 'email' | 'telephone'
 > & { repeatPassword?: string; password: string; token: string };
+export type ChangePasswordUser = {
+    password: string;
+    newPassword: string;
+    repeatPassword: string;
+};
+
 export type userAuthType = z.infer<typeof UserAuthSchema>;
 
 export const UserSchema = z.object({
@@ -24,11 +39,14 @@ export const UserSchema = z.object({
     roleId: z.number(),
     name: z.string(),
     surname: z.string(),
+    password: z.string().nullable().optional(),
     telephone: z.string().nullable(),
     email: z.string().email(),
     image: z.string().nullable().optional(),
     roles: RolSchema.optional(),
+    status: z.boolean().optional(),
 });
+export const UsersSchema = z.array(UserSchema);
 
 //schema and type businessData
 export const BusinessDataSchema = z.object({
@@ -54,3 +72,13 @@ export type LinksSideBar = {
     rol?: string[];
     links?: LinksSideBar[];
 };
+
+export interface TablePaginationActionsProps {
+    count: number;
+    page: number;
+    rowsPerPage: number;
+    onPageChange: (
+        event: React.MouseEvent<HTMLButtonElement>,
+        newPage: number,
+    ) => void;
+}
