@@ -1,5 +1,7 @@
 import { updateUserAPI, uploadImageUserAPI } from '@/api/user/user';
 import UserForm from '@/components/businessData/UserForm';
+import ChangePasswordForm from '@/components/security/ChangePasswordForm';
+import BasicModal from '@/components/Utils/BasicModal';
 import InputEmailsForm from '@/components/Utils/InputEmailForm';
 import InputFileUpload from '@/components/Utils/InputFileUpload';
 import PageTitle from '@/components/Utils/PageTitle';
@@ -11,6 +13,7 @@ import { useForm } from 'react-hook-form';
 
 export default function UserView() {
     const [isReadOnly, setIsReadOnly] = useState(true);
+    const [openModal, setOpenModal] = useState(false);
     const toast = useToast();
     // Get business information from cache
     const queryClient = useQueryClient();
@@ -56,7 +59,27 @@ export default function UserView() {
                 isReadOnly={isReadOnly}
                 setIsReadOnly={setIsReadOnly}
             />
-            <div className="bg-white  py-10 rounded-b-lg shadow-lg">
+            <div className="bg-white py-5  rounded-b-lg shadow-lg">
+                {/* change password */}
+                <button
+                    className=" btn-confirm mb-5 mx-2"
+                    onClick={() => setOpenModal(true)}
+                >
+                    Actualizar contraseña
+                </button>
+                {openModal && info && (
+                    <BasicModal
+                        openModal={openModal}
+                        onClose={() => setOpenModal(false)}
+                    >
+                        <ChangePasswordForm
+                            id={info.id}
+                            onClose={() => setOpenModal(false)}
+                        />
+                    </BasicModal>
+                )}
+
+                {/* form */}
                 <form onSubmit={handleSubmit(handleData)} noValidate>
                     <div className=" grid grid-cols-2 gap-5 mb-5 px-5">
                         <UserForm
