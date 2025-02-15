@@ -8,19 +8,21 @@ import {
 
 type InputEmailsFormProps<T extends FieldValues> = {
     isReadOnly: boolean;
-    register: UseFormRegister<T>;
+    requiredMsg?: string
     errors: FieldErrors<T>;
+    register: UseFormRegister<T>;
 };
 
 export default function InputEmailsForm<T extends FieldValues>({
     isReadOnly,
-    register,
+    requiredMsg,
     errors,
+    register,
 }: InputEmailsFormProps<T>) {
     return (
         <>
-            <div className="flex flex-row items- gap-3 text-gray-800">
-                <label htmlFor="email" className="w-24">
+            <div className="flex flex-col gap-1 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
+                <label htmlFor="email" className="w-24 font-semibold">
                     Email:
                 </label>
                 <div className="flex flex-col w-full">
@@ -31,7 +33,9 @@ export default function InputEmailsForm<T extends FieldValues>({
                             errors.email ? 'border-red-500' : ''
                         }`}
                         readOnly={isReadOnly}
+                        placeholder="Ingrese el email"
                         {...register('email' as Path<T>, {
+                            required: requiredMsg,
                             pattern: {
                                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                                 message: 'Email inválido',
