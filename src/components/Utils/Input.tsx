@@ -24,8 +24,8 @@ export default function Input<T extends FieldValues>({
     register,
 }: InputProps<T>) {
     return (
-        <div className="flex flex-row items-center gap-3 text-gray-800">
-            <label htmlFor={String(name)} className="w-24">
+        <div className="flex flex-col gap-1 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
+            <label htmlFor={String(name)} className="w-24  font-semibold">
                 {title}:
             </label>
             <div className="flex flex-col w-full">
