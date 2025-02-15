@@ -1,5 +1,5 @@
 import api from '@/config/axios';
-import { User, UserSchema } from '@/types/index';
+import { User, UserSchema, UsersSchema } from '@/types/index';
 import { isAxiosError } from 'axios';
 
 export async function getUser({ id }: { id: User['id'] }) {
@@ -18,13 +18,13 @@ export async function getUser({ id }: { id: User['id'] }) {
 
 export async function updateUserAPI(formData: User) {
     try {
+        const { id, ...dataUser } = formData;
         const { data } = await api.put<string>(
-            `/user/update-user/${formData.id}`,
-            formData,
+            `/user/update-user/${id}`,
+            dataUser,
         );
         return data;
     } catch (error) {
-        console.log(error);
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
         }
@@ -51,6 +51,43 @@ export async function uploadImageUserAPI({
                 },
             },
         );
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
+export async function getUsersAPI() {
+    try {
+        const { data } = await api(`/user/get-all-users/`);
+        const result = UsersSchema.safeParse(data);
+        if (result.success) {
+            return result.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
+export async function SuspendUserAPI(id: number) {
+    try {
+        const { data } = await api.patch<string>(`/user/suspended-user/${id}`);
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
+export async function createUserAPI(formData: User) {
+    try {
+        const { id, ...dataUser } = formData;
+        const { data } = await api.post<string>('/user/create-user/', dataUser);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {

@@ -1,5 +1,11 @@
 import api from '@/config/axios';
-import { AuthForm, UserAuthSchema } from '@/types/index';
+import {
+    AuthForm,
+    ChangePasswordUser,
+    RolesSchemaAPI,
+    User,
+    UserAuthSchema,
+} from '@/types/index';
 import { isAxiosError } from 'axios';
 
 export async function registerAccount(formData: AuthForm) {
@@ -10,7 +16,6 @@ export async function registerAccount(formData: AuthForm) {
         );
         return data;
     } catch (error) {
-        console.log(error);
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
         }
@@ -93,6 +98,41 @@ export async function resetPasswordByToken({
             password,
             token,
         });
+        return data;
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
+export async function getAllRolesAPI() {
+    try {
+        const { data } = await api(`/auth/roles`);
+        const result = RolesSchemaAPI.safeParse(data);
+        if (result.success) {
+            return result.data;
+        }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
+//change password
+export async function updatePasswordAPI({
+    formData,
+    id,
+}: {
+    formData: ChangePasswordUser;
+    id: User['id'];
+}) {
+    try {
+        const { data } = await api.put<string>(
+            `/auth/update-password/${id}`,
+            formData,
+        );
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
