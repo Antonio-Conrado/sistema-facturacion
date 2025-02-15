@@ -41,3 +41,39 @@
     width: 30%;
     margin: 0 auto;
 }
+
+.btn-cancel {
+    background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
+    text-align: center;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+.btn-cancel:hover {
+    background-color: rgb(185 28 28 / var(--tw-bg-opacity, 1));
+}
+
+.btn-confirm {
+    background-color: rgb(217 119 6 / var(--tw-bg-opacity, 1));
+    text-align: center;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+.btn-confirm:hover {
+    background-color: rgb(180 83 9 / var(--tw-bg-opacity, 1));
+}
+
+.btn-general {
+    background-color: rgb(14 116 144 / var(--tw-bg-opacity, 1));
+    text-align: center;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+.btn-general:hover {
+    background-color: rgb(21 94 117 / var(--tw-bg-opacity, 1));
+}
