@@ -6,12 +6,14 @@ type UserFormProps = {
     isReadOnly: boolean;
     register: UseFormRegister<User>;
     errors: FieldErrors<User>;
+    createUser?: boolean;
 };
 
 export default function UserForm({
     isReadOnly,
     register,
     errors,
+    createUser,
 }: UserFormProps) {
     return (
         <>
@@ -33,15 +35,17 @@ export default function UserForm({
                 register={register}
                 errors={errors}
             />
-            <Input
-                title="Rol"
-                name="roles.name"
-                msg="El rol es obligatorio"
-                type="text"
-                isReadOnly={true}
-                register={register}
-                errors={errors}
-            />
+            {!createUser && (
+                <Input
+                    title="Rol"
+                    name="roles.name"
+                    msg="El rol es obligatorio"
+                    type="text"
+                    isReadOnly={true}
+                    register={register}
+                    errors={errors}
+                />
+            )}
             <Input
                 title="Teléfono"
                 name="telephone"
