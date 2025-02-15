@@ -8,6 +8,7 @@ import {
     useQueryClient,
 } from '@tanstack/react-query';
 import useToast from '@/hooks/useNotifications';
+import Spinner from './Spinner';
 
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
@@ -40,7 +41,7 @@ export default function InputFileUpload({
     const toast = useToast();
     const fileInputRef = React.useRef<HTMLInputElement | null>(null);
     const queryClient = useQueryClient();
-    const { mutate } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn,
         onError(error) {
             toast.error(error.message);
@@ -61,6 +62,7 @@ export default function InputFileUpload({
             fileInputRef.current.value = '';
         }
     };
+    if (isPending) return <Spinner />;
 
     return (
         <Button
