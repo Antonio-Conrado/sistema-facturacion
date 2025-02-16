@@ -22,6 +22,7 @@ import DashboardViews from './views/app/DashboardViews';
 import SalesViews from './views/app/sales/SalesViews';
 import BusinessDataView from './views/app/businessData/BusinessDataView';
 import UserView from './views/app/businessData/UserView';
+import SecurityView from './views/app/Security/SecurityView';
 
 export default function Router() {
     return (
@@ -68,6 +69,16 @@ export default function Router() {
                                 element={
                                     <ValidateRole roles={[1, 2]}>
                                         <SalesViews />
+                                    </ValidateRole>
+                                }
+                            />
+
+                            {/* Security */}
+                            <Route
+                                path="/seguridad"
+                                element={
+                                    <ValidateRole roles={[1]}>
+                                        <SecurityView />
                                     </ValidateRole>
                                 }
                             />
