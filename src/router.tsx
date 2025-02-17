@@ -23,6 +23,7 @@ import SalesViews from './views/app/sales/SalesViews';
 import BusinessDataView from './views/app/businessData/BusinessDataView';
 import UserView from './views/app/businessData/UserView';
 import SecurityView from './views/app/Security/SecurityView';
+import CategoryView from './views/app/catalogs/CategoryView';
 
 export default function Router() {
     return (
@@ -69,6 +70,15 @@ export default function Router() {
                                 element={
                                     <ValidateRole roles={[1, 2]}>
                                         <SalesViews />
+                                    </ValidateRole>
+                                }
+                            />
+
+                            <Route
+                                path="/catalogos/categorias"
+                                element={
+                                    <ValidateRole roles={[1, 2]}>
+                                        <CategoryView />
                                     </ValidateRole>
                                 }
                             />
