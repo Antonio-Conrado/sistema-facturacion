@@ -28,7 +28,6 @@ export default function InputSearch<T>({
 
         const filteredResults = data.filter((item) =>
             value.some((key) => {
-                console.log(key);
                 if (value.length > 1) {
                     // Concatenate the values of the keys in 'value' array (e.g., name + surname)
                     const concatenatedItemValue = value
