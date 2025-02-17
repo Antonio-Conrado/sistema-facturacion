@@ -8,3 +8,11 @@ export const listSecurityHead = [
     'Estado',
     'Acciones',
 ];
+
+export const listCategoryHead = [
+    'Id',
+    'Nombre',
+    'Descripción',
+    'Estado',
+    'Acciones',
+];

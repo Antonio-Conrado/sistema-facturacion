@@ -112,3 +112,12 @@ export const links: LinksSideBar[] = [
         ],
     },
 ];
+
+export enum ModalAction {
+    Edit = 'edit',
+    ChangePassword = 'changePassword',
+    ChangeImage = 'changeImage',
+    Suspend = 'suspend',
+    Add = 'add',
+    View = 'view',
+}
