@@ -56,11 +56,39 @@ export const BusinessDataSchema = z.object({
     description: z.string(),
     direction: z.string(),
     telephone: z.string(),
-    email: z.string().email().nullable(),
+    email: z.string().nullable().optional(),
     image: z.string().nullable().optional(),
 });
 
 export type BusinessData = z.infer<typeof BusinessDataSchema>;
+
+//catalogs
+//category
+export const CategorySchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    description: z.string().nullable().optional(),
+    status: z.boolean(),
+});
+
+export const CategoriesSchema = z.array(CategorySchema);
+export type Category = z.infer<typeof CategorySchema>;
+export type Categories = z.infer<typeof CategoriesSchema>;
+//supplier
+
+export const SupplierSchema = z.object({
+    id: z.number(),
+    ruc: z.string(),
+    name: z.string(),
+    direction: z.string().nullable().optional(),
+    telephone: z.string().nullable().optional(),
+    email: z.string().nullable().optional(),
+    status: z.boolean(),
+})
+
+export const SuppliersSchema = z.array(SupplierSchema)
+export type Supplier = z.infer<typeof SupplierSchema>
+export type Suppliers = z.infer<typeof SuppliersSchema>
 
 //schema and type generals
 export const ResponseMsgAPISchema = z.string();
