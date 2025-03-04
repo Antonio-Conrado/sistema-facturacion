@@ -13,6 +13,8 @@ const style = {
     boxShadow: 24,
     p: 4,
     borderRadius: '8px',
+    overflow: 'auto',
+    maxHeight: '90vh',
 };
 
 type BasicModalProps = {
