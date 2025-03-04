@@ -21,13 +21,13 @@ export default function TableBodyCellSecurity({ row }: { row: User }) {
             <TableCell align="center">{row.telephone}</TableCell>
             <TableCell align="center">
                 {row.status ? (
-                    <span className="bg-green-700 text-white p-2 rounded-md">
+                    <p className="bg-green-700 text-white p-2 rounded-md">
                         Disponible
-                    </span>
+                    </p>
                 ) : (
-                    <span className="bg-red-700 text-white p-2 rounded-md">
+                    <p className="bg-red-700 text-white p-2 rounded-md">
                         Suspendido
-                    </span>
+                    </p>
                 )}
             </TableCell>
         </>

@@ -11,13 +11,13 @@ export default function TableBodyCellCategory({ row }: { row: Category }) {
             <TableCell align="center">{row.description}</TableCell>
             <TableCell align="center">
                 {row.status ? (
-                    <span className="bg-green-700 text-white p-2 rounded-md">
+                    <p className="bg-green-700 text-white p-2 rounded-md">
                         Disponible
-                    </span>
+                    </p>
                 ) : (
-                    <span className="bg-red-700 text-white p-2 rounded-md">
+                    <p className="bg-red-700 text-white p-2 rounded-md">
                         No Disponible
-                    </span>
+                    </p>
                 )}
             </TableCell>
         </>

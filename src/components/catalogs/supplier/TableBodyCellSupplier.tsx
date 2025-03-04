@@ -16,13 +16,13 @@ export default function TableBodyCellSupplier({ row }: { row: Supplier }) {
             <TableCell align="center">{row.email}</TableCell>
             <TableCell align="center">
                 {row.status ? (
-                    <span className="bg-green-700 text-white p-2 rounded-md">
+                    <p className="bg-green-700 text-white p-2 rounded-md">
                         Disponible
-                    </span>
+                    </p>
                 ) : (
-                    <span className="bg-red-700 text-white p-2 rounded-md">
+                    <p className="bg-red-700 text-white p-2 rounded-md">
                         No Disponible
-                    </span>
+                    </p>
                 )}
             </TableCell>
         </>

@@ -79,7 +79,7 @@ export default function SuppliersData({ data }: { data: Suppliers }) {
                                     }
                                 />
                                 <Block
-                                    className="text-zinc-800  hover:text-zinc-700 cursor-pointer"
+                                    className="text-red-800 hover:text-red-700 cursor-pointer"
                                     onClick={() =>
                                         handleOpenModal(
                                             ModalAction.Suspend,
