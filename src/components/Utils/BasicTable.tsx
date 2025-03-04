@@ -56,6 +56,7 @@ export default function BasicTable<T>({
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
+                labelRowsPerPage="Filas por página"
             />
         </Paper>
     );
