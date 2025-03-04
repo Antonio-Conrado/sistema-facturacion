@@ -1,4 +1,9 @@
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+import {
+    FieldErrors,
+    FieldValues,
+    RegisterOptions,
+    UseFormRegister,
+} from 'react-hook-form';
 import { Path } from 'react-hook-form';
 import ErrorMessage from './ErrorMessage';
 
@@ -9,6 +14,7 @@ type InputProps<T extends FieldValues> = {
     msg?: string;
     type: string;
     isReadOnly: boolean;
+    validate?: RegisterOptions<T>;
     register: UseFormRegister<T>; // 'register' is typed based on the form data shape
     errors?: FieldErrors<T>; // 'errors' is typed based on the form data shape
 };
@@ -20,6 +26,7 @@ export default function Input<T extends FieldValues>({
     msg = '',
     type,
     isReadOnly,
+    validate,
     errors = {},
     register,
 }: InputProps<T>) {
@@ -34,11 +41,13 @@ export default function Input<T extends FieldValues>({
                     className={`border rounded-md p-2 w-full ${
                         errors?.[name] ? 'border-red-500' : ''
                     }`}
+                    min={type === 'number' ? 1 : ''}
                     id={String(name)}
                     readOnly={isReadOnly}
                     placeholder={`Ingresa ${title.toLowerCase()}`}
                     {...register(name, {
                         required: msg,
+                        ...validate,
                     })}
                 />
                 {errors?.[name]?.message && (
