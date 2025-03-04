@@ -28,3 +28,16 @@ export const listSuppliersHead = [
     'Estado',
     'Acciones',
 ];
+
+//product
+export const listProductHead = [
+    'Id',
+    'Image',
+    'Code',
+    'Nombre',
+    'Categoría',
+    'Stock',
+    'Precio de Venta',
+    'Estado',
+    'Acciones',
+];
