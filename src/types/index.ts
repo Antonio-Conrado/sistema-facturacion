@@ -84,12 +84,87 @@ export const SupplierSchema = z.object({
     telephone: z.string().nullable().optional(),
     email: z.string().nullable().optional(),
     status: z.boolean(),
-})
+});
 
-export const SuppliersSchema = z.array(SupplierSchema)
-export type Supplier = z.infer<typeof SupplierSchema>
-export type Suppliers = z.infer<typeof SuppliersSchema>
+export const SuppliersSchema = z.array(SupplierSchema);
+export type Supplier = z.infer<typeof SupplierSchema>;
+export type Suppliers = z.infer<typeof SuppliersSchema>;
 
+//product
+export const ProductSchema = z.object({
+    id: z.number(),
+    code: z.string(),
+    name: z.string(),
+    status: z.boolean(),
+    categoriesId: z.number(),
+    categories: CategorySchema.pick({ name: true }),
+});
+export const DetailsProductSchema = z.object({
+    id: z.number(),
+    productsId: z.number(),
+    description: z.string().nullable(),
+    image: z.string().nullable(),
+    products: ProductSchema,
+});
+
+export const StoredProductSchema = z.object({
+    id: z.number(),
+    detailsProductsId: z.number(),
+    stock: z.number(),
+    purchasePrice: z.number(),
+    salePrice: z.number(),
+    status: z.boolean(),
+    created_at: z.string(),
+    updated_at: z.string(),
+    detailsProducts: DetailsProductSchema,
+});
+
+export const StoredProductsSchema = z.array(StoredProductSchema);
+export type StoredProducts = z.infer<typeof StoredProductsSchema>;
+export type StoredProduct = z.infer<typeof StoredProductSchema>;
+export type Product = z.infer<typeof ProductSchema>;
+
+export type ProductForm = {
+    storedProductId?: number;
+    stock?: number;
+    purchasePrice?: number;
+    salePrice?: number;
+    detailsProductsId?: number;
+    description?: string | null;
+    productId?: number;
+    code: string;
+    name: string;
+    categoriesId: number;
+};
+
+export type CreateProduct = {
+    detailsProducts: {
+        description?: string | null;
+        products: {
+            code: string;
+            name: string;
+            categoriesId: number;
+        };
+    };
+};
+
+export type UpdateProduct = {
+    detailsProducts: {
+        id: number;
+        description?: string | null;
+        products: {
+            id: number;
+            code: string;
+            name: string;
+            categoriesId: number;
+        };
+    };
+};
+
+export type ProductsSearch = {
+    name: Product['name'];
+    code: Product['code'];
+};
 //schema and type generals
 export const ResponseMsgAPISchema = z.string();
 
