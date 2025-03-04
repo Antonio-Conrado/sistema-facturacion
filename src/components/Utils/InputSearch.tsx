@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Dispatch, SetStateAction } from 'react';
 
 type InputSearchProps<T> = {
-    value: (keyof T)[]; // value is an array of keys from the T type (representing the fields to search in)
+    value: (keyof T | string)[]; // 'value' is an array of keys from the T type (representing the fields to search in), allowing access through nested objects via strings.
     placeholder: string;
     dataCache: string;
     setFilteredResults: Dispatch<SetStateAction<T[]>>;
@@ -14,55 +14,53 @@ export default function InputSearch<T>({
     dataCache,
     setFilteredResults,
 }: InputSearchProps<T>) {
-    // Get the cached data from the query client
     const queryClient = useQueryClient();
-    const data: T[] = queryClient.getQueryData([dataCache])!;
+    const data: T[] = queryClient.getQueryData([dataCache]) ?? [];
+
+    // 'targetObject' is an individual element from the 'data' array.
+    // 'path' is a string representing the nested path (example., 'address.city') used to access a specific property.
+    const getPropertyValueByPath = (targetObject: any, path: string) => {
+        return path
+            .split('.')
+            .reduce(
+                (accumulatedValue, key) => accumulatedValue?.[key],
+                targetObject,
+            );
+    };
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const word = e.target.value.trim().toLowerCase();
+        if (!word) return setFilteredResults(data);
 
-        if (!word) return setFilteredResults(data); // If the search term is empty, return all data
-
-        // Split the search term into individual words by spaces example:['name  surname']  result: ['name' , 'surname']
         const searchTerms = word.split(/\s+/);
 
         const filteredResults = data.filter((item) =>
             value.some((key) => {
-                if (value.length > 1) {
-                    // Concatenate the values of the keys in 'value' array (e.g., name + surname)
-                    const concatenatedItemValue = value
-                        .map((key) => item[key]) // Get each field value from the item 'Antonio' and 'Conrado'
-                        .join(' '); // Join them with a space in between 'Antonio Conrado'
+                const itemValue = getPropertyValueByPath(item, key.toString());
 
-                    const cleanedItemValue =
-                        concatenatedItemValue.toLowerCase();
-
-                    // Check if all search terms are present in the concatenated value
-                    return searchTerms.every((term) =>
-                        cleanedItemValue.includes(term),
-                    );
-                } else {
-                    const itemValue = item[key]; // For single value search
-
-                    // Ensure the item value is a string and check if it includes the search term
-                    return (
-                        typeof itemValue === 'string' &&
+                // If the value is an array, check if any sub-item matches the search terms.
+                if (Array.isArray(itemValue)) {
+                    return itemValue.some((subItem) =>
                         searchTerms.every((term) =>
-                            itemValue.toLowerCase().includes(term),
-                        )
+                            String(subItem).toLowerCase().includes(term),
+                        ),
                     );
                 }
+
+                // Convert the value to a string and check if it matches all search terms.
+                const stringValue = String(itemValue ?? '').toLowerCase();
+                return searchTerms.every((term) => stringValue.includes(term));
             }),
         );
-
-        setFilteredResults(filteredResults); // Store the filtered results in state
+        setFilteredResults(filteredResults);
     };
 
     return (
-        <div className="flex justify-center items-center gap-3">
+        <div className="flex justify-center items-center gap-3 w-[90%] sm:w-fit">
             <input
                 type="text"
-                className="p-2 rounded-lg border-2 border-cyan-700 sm:w-64"
+                className="p-2 rounded-lg border-2 border-gray-300"
+                style={{ width: `${placeholder.length * 8 + 10}px` }} // 8px per character, +10 for base width
                 placeholder={placeholder}
                 onChange={handleSearch}
                 name="word"
