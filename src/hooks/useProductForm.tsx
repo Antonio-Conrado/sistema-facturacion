@@ -19,7 +19,24 @@ export default function useProductForm({
 }: useProductFormProps) {
     const toast = useToast();
     const queryClient = useQueryClient();
-    const categories = queryClient.getQueryData<Categories>(['categories']);
+
+    //return only category with status is true
+    const categoriesAPI = queryClient.getQueryData<Categories>(['categories']);
+    let categories;
+
+    if (categoriesAPI) {
+        // If the action is 'Edit', show the associated category even if it's deactivated
+        categories =
+            action === ModalAction.Edit
+                ? categoriesAPI.filter(
+                      // filter by status true or the reference category of the product
+                      (category) =>
+                          category.status === true ||
+                          category.id ===
+                              product?.detailsProducts.products.categoriesId,
+                  )
+                : categoriesAPI.filter((category) => category.status === true); // filter by categories with status true
+    }
 
     const initialValues: ProductForm = {
         stock: product?.stock || 0,

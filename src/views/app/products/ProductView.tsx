@@ -32,6 +32,11 @@ export default function ProductView() {
         queryFn: getCategoriesAPI,
     });
 
+    //return only category with status is true
+    const availableCategories = categories.data?.filter(
+        (category) => category.status === true,
+    );
+
     useEffect(() => {
         if (!products.data) return;
 
@@ -84,9 +89,9 @@ export default function ProductView() {
                         </div>
 
                         <div className="flex flex-col gap-3 lg:flex-row items-center  justify-around mt-3">
-                            {categories.data && (
+                            {availableCategories && (
                                 <AutoCompleteSearch
-                                    options={categories.data.map(
+                                    options={availableCategories.map(
                                         (category) => ({
                                             value: category.id,
                                             label: category.name,
