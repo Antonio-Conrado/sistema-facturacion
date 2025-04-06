@@ -4,11 +4,14 @@ import useToast from '@/hooks/useNotifications';
 import { StoredProduct } from '@/types/index';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-type SuspendUserProps = {
+type SuspendProductProps = {
     product: StoredProduct;
     onClose: () => void;
 };
-export default function SuspendProduct({ product, onClose }: SuspendUserProps) {
+export default function SuspendProduct({
+    product,
+    onClose,
+}: SuspendProductProps) {
     const toast = useToast();
     const queryClient = useQueryClient();
     const { mutate } = useMutation({
