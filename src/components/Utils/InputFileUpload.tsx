@@ -27,9 +27,8 @@ type InputFileUploadProps = {
     infoCache: string;
     mutationFn: MutationFunction<
         string | undefined,
-        { id?: number; file: File } // Aseguramos que siempre haya un archivo
+        { id?: number; file: File }
     >;
-    // string for success message, File for the uploaded file
     id?: number;
 };
 export default function InputFileUpload({
@@ -48,7 +47,9 @@ export default function InputFileUpload({
         },
         onSuccess: (data) => {
             if (data) toast.success(data);
-            queryClient.invalidateQueries({ queryKey: [infoCache] });
+            queryClient.invalidateQueries({
+                queryKey: id ? [infoCache, id] : [infoCache],
+            });
         },
     });
 
