@@ -9,12 +9,14 @@ type AutoCompleteSearchProps<T> = {
     options: Option<T>[];
     onChange: (value: T | null) => void;
     value: T | null;
+    title: string;
 };
 
 export default function AutoCompleteSearch<T>({
     options,
     onChange,
     value,
+    title,
 }: AutoCompleteSearchProps<T>) {
     return (
         <div className="flex flex-col gap-1 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
@@ -22,12 +24,17 @@ export default function AutoCompleteSearch<T>({
                 disablePortal
                 options={options}
                 getOptionLabel={(option) => option.label}
+                renderOption={(props, option) => (
+                    <li {...props} key={Number(option.value)}>
+                        {option.label}
+                    </li>
+                )}
                 onChange={(_, newValue) =>
                     onChange(newValue ? newValue.value : null)
                 }
                 value={options.find((option) => option.value === value) || null}
                 renderInput={(params) => (
-                    <TextField {...params} label="Categoría" />
+                    <TextField {...params} label={title} />
                 )}
                 noOptionsText="No encontrado"
                 className="w-40"
