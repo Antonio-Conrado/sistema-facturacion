@@ -165,6 +165,74 @@ export type ProductsSearch = {
     name: Product['name'];
     code: Product['code'];
 };
+
+//purchase
+export const PurchaseHistoryTableSchema = z.object({
+    id: z.number(),
+    users: z.object({ id: z.number(), name: z.string(), surname: z.string() }),
+    suppliers: z.object({ id: z.number(), name: z.string() }),
+    iva: z.object({ rate: z.number() }),
+    invoiceNumber: z.number(),
+    document: z.string().url().nullable(),
+    date: z.string(),
+    total: z.number(),
+    discount: z.number(),
+    status: z.boolean(),
+});
+export const PurchasesHistoryTableSchema = z.array(PurchaseHistoryTableSchema);
+
+export const PurchasesHistoySchema = z.object({
+    purchases: PurchasesHistoryTableSchema,
+    total: z.number(),
+});
+
+export type PurchasesHistoryTable = z.infer<typeof PurchasesHistoryTableSchema>;
+export type PurchasesHistory = z.infer<typeof PurchasesHistoySchema>;
+export type PurchaseHistoryTable = z.infer<typeof PurchaseHistoryTableSchema>;
+
+// purchase Details
+
+const PurchasesDetailsSchema = z.array(
+    z.object({
+        id: z.number(),
+        purchasesId: z.number(),
+        amount: z.number(),
+        purchasePrice: z.number(),
+        salePrice: z.number(),
+        discount: z.number(),
+        subtotal: z.number(),
+        storedProducts: z.object({
+            detailsProducts: z.object({
+                image: z.string().url(), // Define directamente
+                products: z.object({
+                    code: z.string(),
+                    name: z.string(),
+                }),
+            }),
+        }),
+    }),
+);
+
+export const PurchaseSchema = z.object({
+    id: z.number(),
+    usersId: z.number(),
+    suppliersId: z.number(),
+    ivaId: z.number(),
+    invoiceNumber: z.number(),
+    document: z.string().url().nullable(),
+    date: z.string(),
+    subtotal: z.number(),
+    discount: z.number(),
+    total: z.number(),
+    status: z.boolean(),
+    users: z.object({ name: z.string(), surname: z.string() }),
+    suppliers: z.object({ name: z.string() }),
+    iva: z.object({ rate: z.number() }),
+    detailsPurchases: PurchasesDetailsSchema,
+});
+
+export type Purchase = z.infer<typeof PurchaseSchema>;
+export type PurchaseDetails = z.infer<typeof PurchasesDetailsSchema>;
 //schema and type generals
 export const ResponseMsgAPISchema = z.string();
 
@@ -185,3 +253,18 @@ export interface TablePaginationActionsProps {
         newPage: number,
     ) => void;
 }
+
+export type DataType = 'date' | 'status' | 'currency' | 'text';
+
+// General definition of search filters for different entities
+export enum SearchFilterEnum {
+    suppliersId = 'suppliersId',
+    invoiceNumber = 'invoiceNumber',
+    usersId = 'usersId',
+}
+
+export type SearchFilterValues = {
+    [SearchFilterEnum.suppliersId]: number | null;
+    [SearchFilterEnum.invoiceNumber]: string | null;
+    [SearchFilterEnum.usersId]: number | null;
+};
