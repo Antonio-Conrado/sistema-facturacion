@@ -11,6 +11,7 @@ type BasicTableProps<T> = {
     listHead: string[];
     page: number;
     rowsPerPage: number;
+    total?: number;
     setPage: Dispatch<SetStateAction<number>>;
     setRowsPerPage: Dispatch<SetStateAction<number>>;
     children: React.ReactNode;
@@ -20,6 +21,7 @@ export default function BasicTable<T>({
     listHead,
     page,
     rowsPerPage,
+    total,
     setPage,
     setRowsPerPage,
     children,
@@ -51,12 +53,15 @@ export default function BasicTable<T>({
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
-                count={rows.length}
+                count={total ? total : rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
                 labelRowsPerPage="Filas por página"
+                labelDisplayedRows={({ from, to, count }) =>
+                    `${from}–${to} de ${count}`
+                }
             />
         </Paper>
     );
