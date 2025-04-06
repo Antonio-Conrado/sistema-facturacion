@@ -1,4 +1,4 @@
-import { ModalAction } from '@/data/index';
+import { ModalAction, Role } from '@/data/index';
 import useToast from '@/hooks/useNotifications';
 import { StoredProduct, StoredProducts, User } from '@/types/index';
 import { useState } from 'react';
@@ -76,7 +76,7 @@ export default function ProductsData({ data }: { data: StoredProducts }) {
 
                             <TableCell align="center" className="space-x-1 ">
                                 <Info
-                                    className="text-cyan-800  hover:text-amber-700 cursor-pointer"
+                                    className="text-cyan-800  hover:text-cyan-700 cursor-pointer"
                                     onClick={() =>
                                         handleOpenModal(
                                             ModalAction.View,
@@ -102,7 +102,7 @@ export default function ProductsData({ data }: { data: StoredProducts }) {
                                         )
                                     }
                                 />
-                                {user.roles?.name === 'administrador' && (
+                                {user?.roles?.name === Role.admin && (
                                     <Block
                                         className="text-red-800 hover:text-red-700 cursor-pointer"
                                         onClick={() =>
