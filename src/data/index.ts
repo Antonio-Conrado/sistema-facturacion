@@ -11,30 +11,34 @@ import {
     AccountCircle,
 } from '@mui/icons-material';
 
+export enum Role {
+    admin = 'administrador',
+    employee = 'empleado',
+}
 export const links: LinksSideBar[] = [
     {
         name: 'Dashboard',
         path: '/dashboard',
         icon: Analytics,
-        rol: ['administrador'],
+        rol: [Role.admin],
     },
     {
         name: 'Venta',
         path: '/ventas',
         icon: AttachMoney,
-        rol: ['administrador', 'empleado'],
+        rol: [Role.admin, Role.employee],
         links: [
             {
                 name: 'Nueva Venta',
                 path: '/ventas',
                 icon: AttachMoney,
-                rol: ['administrador', 'empleado'],
+                rol: [Role.admin, Role.employee],
             },
             {
                 name: 'Historial de Ventas',
                 path: '/historial-ventas',
                 icon: AttachMoney,
-                rol: ['administrador', 'empleado'],
+                rol: [Role.admin, Role.employee],
             },
         ],
     },
@@ -42,19 +46,19 @@ export const links: LinksSideBar[] = [
         name: 'Compras',
         path: '/compras',
         icon: AttachMoney,
-        rol: ['administrador', 'empleado'],
+        rol: [Role.admin, Role.employee],
         links: [
             {
                 name: 'Nueva Compra',
                 path: '/compras',
                 icon: AttachMoney,
-                rol: ['administrador', 'empleado'],
+                rol: [Role.admin, Role.employee],
             },
             {
                 name: 'Historial de Compras',
                 path: '/historial-compras',
                 icon: AttachMoney,
-                rol: ['administrador', 'empleado'],
+                rol: [Role.admin, Role.employee],
             },
         ],
     },
@@ -62,26 +66,26 @@ export const links: LinksSideBar[] = [
         name: 'Productos',
         path: '/productos',
         icon: Inventory,
-        rol: ['administrador', 'empleado'],
+        rol: [Role.admin, Role.employee],
     },
 
     {
         name: 'Catálogos',
         path: '/catalogos',
         icon: GridView,
-        rol: ['administrador', 'empleado'],
+        rol: [Role.admin, Role.employee],
         links: [
             {
                 name: 'Proveedores',
                 path: '/catalogos/proveedores',
                 icon: Person,
-                rol: ['administrador', 'empleado'],
+                rol: [Role.admin, Role.employee],
             },
             {
                 name: 'Categorías',
                 path: '/catalogos/categorias',
                 icon: GridView,
-                rol: ['administrador', 'empleado'],
+                rol: [Role.admin, Role.employee],
             },
         ],
     },
@@ -89,25 +93,25 @@ export const links: LinksSideBar[] = [
         name: 'Seguridad',
         path: '/seguridad',
         icon: Person,
-        rol: ['administrador'],
+        rol: [Role.admin],
     },
     {
         name: 'Configuración',
         path: '/configuracion',
         icon: Settings,
-        rol: ['administrador', 'empleado'],
+        rol: [Role.admin, Role.employee],
         links: [
             {
                 name: 'Datos del Negocio',
                 path: '/configuracion/datos-negocio',
                 icon: Store,
-                rol: ['administrador'],
+                rol: [Role.admin],
             },
             {
                 name: 'Información Personal',
                 path: '/configuracion/informacion-personal',
                 icon: AccountCircle,
-                rol: ['administrador', 'empleado'],
+                rol: [Role.admin, Role.employee],
             },
         ],
     },
