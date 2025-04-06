@@ -4,14 +4,14 @@ import useToast from '@/hooks/useNotifications';
 import { Category } from '@/types/index';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-type SuspendUserProps = {
+type SuspendCategoryProps = {
     category: Category;
     onClose: () => void;
 };
 export default function SuspendCategory({
     category,
     onClose,
-}: SuspendUserProps) {
+}: SuspendCategoryProps) {
     const toast = useToast();
     const queryClient = useQueryClient();
     const { mutate } = useMutation({
