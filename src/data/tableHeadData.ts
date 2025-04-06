@@ -41,3 +41,27 @@ export const listProductHead = [
     'Estado',
     'Acciones',
 ];
+
+//purchases
+export const listPurchasesHistoryHead = [
+    '№ de factura',
+    'usuario',
+    'Proveedor',
+    'Fecha',
+    'Descuento',
+    'Iva',
+    'Total',
+    'Estado',
+    'Acciones',
+];
+
+export const PurchaseHead = [
+    'Imagen',
+    'Código',
+    'Nombre',
+    'Precio de compra',
+    'Precio de venta',
+    'Cantidad',
+    'Descuento',
+    'Subtotal',
+];
