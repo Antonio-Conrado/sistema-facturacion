@@ -1,16 +1,17 @@
 import { SvgIconComponent } from '@mui/icons-material';
 import { z } from 'zod';
 //schema and type User
+export const RolSchema = z.object({
+    name: z.string(),
+});
 export const UserAuthSchema = z.object({
     id: z.number(),
     email: z.string(),
     status: z.boolean(),
     roleId: z.number(),
+    roles: RolSchema,
 });
 
-export const RolSchema = z.object({
-    name: z.string(),
-});
 export const RolesSchemaAPI = z.array(
     z.object({
         id: z.number(),
