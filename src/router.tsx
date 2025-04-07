@@ -26,6 +26,8 @@ import SecurityView from './views/app/Security/SecurityView';
 import CategoryView from './views/app/catalogs/CategoryView';
 import SupplierView from './views/app/catalogs/SupplierView';
 import ProductView from './views/app/products/ProductView';
+import PurchaseHistoryView from './views/app/purchases/PurchaseHistoryView';
+import PurchaseDetailView from './views/app/purchases/PurchaseView';
 
 export default function Router() {
     return (
@@ -82,6 +84,24 @@ export default function Router() {
                                 element={
                                     <ValidateRole roles={[1, 2]}>
                                         <ProductView />
+                                    </ValidateRole>
+                                }
+                            />
+
+                            {/* Purchases */}
+                            <Route
+                                path="historial-compras"
+                                element={
+                                    <ValidateRole roles={[1, 2]}>
+                                        <PurchaseHistoryView />
+                                    </ValidateRole>
+                                }
+                            />
+                            <Route
+                                path="historial-compras/:id"
+                                element={
+                                    <ValidateRole roles={[1, 2]}>
+                                        <PurchaseDetailView />
                                     </ValidateRole>
                                 }
                             />
