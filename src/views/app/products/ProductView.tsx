@@ -32,11 +32,6 @@ export default function ProductView() {
         queryFn: getCategoriesAPI,
     });
 
-    //return only category with status is true
-    const availableCategories = categories.data?.filter(
-        (category) => category.status === true,
-    );
-
     useEffect(() => {
         if (!products.data) return;
 
@@ -61,7 +56,7 @@ export default function ProductView() {
 
     if (products.isLoading || categories.isLoading) return <Spinner />;
     if (products.isError || categories.isError) return <DataNotFound />;
-    if (products.data)
+    if (products.data && categories.data)
         return (
             <>
                 <PageTitle title="Productos" />
@@ -73,7 +68,7 @@ export default function ProductView() {
                                 className="btn-confirm w-fit max-h-10 mx-auto md:mx-0"
                                 onClick={() => setOpenModal(true)}
                             >
-                                Agregar Categoría
+                                Agregar Producto
                             </button>
                             {openModal && (
                                 <BasicModal
@@ -89,9 +84,9 @@ export default function ProductView() {
                         </div>
 
                         <div className="flex flex-col gap-3 lg:flex-row items-center  justify-around mt-3">
-                            {availableCategories && (
+                            {categories.data && (
                                 <AutoCompleteSearch
-                                    options={availableCategories.map(
+                                    options={categories.data.map(
                                         (category) => ({
                                             value: category.id,
                                             label: category.name,
@@ -99,6 +94,7 @@ export default function ProductView() {
                                     )}
                                     value={selectedCategory}
                                     onChange={setSelectedCategory}
+                                    title="Categoría"
                                 />
                             )}
                             <InputSearch
