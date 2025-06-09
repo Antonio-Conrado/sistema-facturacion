@@ -1,4 +1,4 @@
-import { LinksSideBar } from '../types';
+import { IvaList, LinksSideBar } from '../types';
 
 import {
     Analytics,
@@ -125,3 +125,8 @@ export enum ModalAction {
     Add = 'add',
     View = 'view',
 }
+
+export const ivaList: IvaList = [
+    { id: 0, value: 0 },
+    { id: 1, value: 15 },
+];

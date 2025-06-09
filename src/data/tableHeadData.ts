@@ -65,3 +65,16 @@ export const PurchaseHead = [
     'Descuento',
     'Subtotal',
 ];
+
+//purchase
+export const listPurchaseHeaders = [
+    'Id',
+    'Imagen',
+    'Código',
+    'Nombre',
+    'Precio de Compra',
+    'Precio de Venta',
+    'Cantidad',
+    'Descuento',
+    'SubTotal',
+];
