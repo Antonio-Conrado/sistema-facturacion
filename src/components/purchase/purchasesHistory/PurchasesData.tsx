@@ -3,7 +3,6 @@ import {
     PurchaseHistoryTable,
     PurchasesHistory,
     SearchFilterValues,
-    User,
 } from '@/types/index';
 import { useEffect, useState } from 'react';
 import BasicTable from '../../Utils/BasicTable';
@@ -23,6 +22,8 @@ import {
     getPurchasesApi,
     uploadPurchaseInvoiceAPI,
 } from '@/api/purchase/purchase';
+import useAuth from '@/hooks/useAuth';
+import { getUser } from '@/api/user/user';
 
 type PurchasesDataProps = {
     data: PurchasesHistory['purchases'];
@@ -37,7 +38,11 @@ export default function PurchasesData({
     filteredPurchasesByTerm,
 }: PurchasesDataProps) {
     const location = useLocation();
-    const { data: user } = useQuery<User>({ queryKey: ['user'] });
+    const { userAuth } = useAuth();
+    const { data: user } = useQuery({
+        queryKey: ['user'],
+        queryFn: () => getUser({ id: userAuth.id }),
+    });
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
