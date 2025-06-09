@@ -172,7 +172,7 @@ export const PurchaseHistoryTableSchema = z.object({
     id: z.number(),
     users: z.object({ id: z.number(), name: z.string(), surname: z.string() }),
     suppliers: z.object({ id: z.number(), name: z.string() }),
-    iva: z.object({ rate: z.number() }),
+    iva: z.number(),
     invoiceNumber: z.number(),
     document: z.string().url().nullable(),
     date: z.string(),
@@ -218,7 +218,7 @@ export const PurchaseSchema = z.object({
     id: z.number(),
     usersId: z.number(),
     suppliersId: z.number(),
-    ivaId: z.number(),
+    iva: z.number(),
     invoiceNumber: z.number(),
     document: z.string().url().nullable(),
     date: z.string(),
@@ -228,12 +228,17 @@ export const PurchaseSchema = z.object({
     status: z.boolean(),
     users: z.object({ name: z.string(), surname: z.string() }),
     suppliers: z.object({ name: z.string() }),
-    iva: z.object({ rate: z.number() }),
     detailsPurchases: PurchasesDetailsSchema,
 });
 
 export type Purchase = z.infer<typeof PurchaseSchema>;
 export type PurchaseDetails = z.infer<typeof PurchasesDetailsSchema>;
+
+//iva
+export type IvaList = {
+    id: number;
+    value: number;
+}[];
 //schema and type generals
 export const ResponseMsgAPISchema = z.string();
 
@@ -262,10 +267,14 @@ export enum SearchFilterEnum {
     suppliersId = 'suppliersId',
     invoiceNumber = 'invoiceNumber',
     usersId = 'usersId',
+    ivaId = 'ivaId',
+    productId = 'productId',
 }
 
 export type SearchFilterValues = {
     [SearchFilterEnum.suppliersId]: number | null;
     [SearchFilterEnum.invoiceNumber]: string | null;
     [SearchFilterEnum.usersId]: number | null;
+    [SearchFilterEnum.ivaId]: number | null;
+    [SearchFilterEnum.productId]: number | null;
 };
