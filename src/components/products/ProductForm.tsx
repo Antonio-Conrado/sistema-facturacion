@@ -4,6 +4,10 @@ import useProductForm from '@/hooks/useProductForm';
 import { StoredProduct } from '@/types/index';
 import SelectAutocomplete from '../Utils/SelectAutocomplete';
 import { Controller } from 'react-hook-form';
+import BasicModal from '../Utils/BasicModal';
+import CategoryForm from '../catalogs/category/CategoryForm';
+import { useAppStore } from '@/store/useAppStore';
+import { Add } from '@mui/icons-material';
 
 type ProductFormProps = {
     product?: StoredProduct;
@@ -18,6 +22,8 @@ export default function ProductForm({
     isReadOnly,
     onClose,
 }: ProductFormProps) {
+    const addedFromModal = useAppStore((store) => store.addedFromModal);
+    const isActiveModal = useAppStore((store) => store.isActiveModal);
     const { categories, register, control, handleSubmit, errors, handleData } =
         useProductForm({ product, action, onClose });
 
@@ -51,19 +57,33 @@ export default function ProductForm({
                         errors={errors}
                         register={register}
                     />
-                    {categories && (
-                        <SelectAutocomplete
-                            title="Categoría"
-                            name="categoriesId"
-                            msg="La categoría es obligatoria"
-                            options={categories.map((category) => ({
-                                value: category.id,
-                                label: category.name,
-                            }))}
-                            isReadOnly={isReadOnly || false}
-                            control={control}
-                        />
-                    )}
+
+                    <div className="grid grid-cols-1">
+                        <div className="flex items-center gap-1">
+                            <div className="basis-[95%]">
+                                {categories && (
+                                    <SelectAutocomplete
+                                        title="Categoría"
+                                        name="categoriesId"
+                                        msg="La categoría es obligatoria"
+                                        options={categories.map((category) => ({
+                                            value: category.id,
+                                            label: category.name,
+                                        }))}
+                                        isReadOnly={isReadOnly || false}
+                                        control={control}
+                                    />
+                                )}
+                            </div>
+                            <div className="basis-[5%]">
+                                <Add
+                                    onClick={() =>
+                                        addedFromModal(true, 'categories')
+                                    }
+                                />
+                            </div>
+                        </div>
+                    </div>
 
                     {ModalAction.View === action && (
                         <>
@@ -131,6 +151,19 @@ export default function ProductForm({
                     </div>
                 )}
             </form>
+
+            {/* Show modal to add a category */}
+            {isActiveModal && (
+                <BasicModal
+                    openModal={isActiveModal}
+                    onClose={() => addedFromModal(false, 'categories')}
+                >
+                    <CategoryForm
+                        onClose={() => addedFromModal(false, 'categories')}
+                        action={ModalAction.Add}
+                    />
+                </BasicModal>
+            )}
         </div>
     );
 }
