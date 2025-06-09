@@ -10,11 +10,9 @@ export default function NoDataMessage({
     return (
         <TableRow>
             <TableCell align="center" colSpan={cols}>
-                <TableCell align="center" colSpan={cols}>
-                    No hay resultados para mostrar. Es posible que aún no se
-                    hayan registrado datos de {msg}, o que los filtros aplicados
-                    no coincidan con ningún registro.
-                </TableCell>
+                No hay resultados para mostrar. Es posible que aún no se hayan
+                registrado datos de {msg}, o que los filtros aplicados no
+                coincidan con ningún registro.
             </TableCell>
         </TableRow>
     );

@@ -3,12 +3,15 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { User } from '@/types/index';
+
+import { getUser } from '@/api/user/user';
+import useAuth from '@/hooks/useAuth';
 
 export default function UserIcon() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
+    const { userAuth } = useAuth();
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -24,7 +27,11 @@ export default function UserIcon() {
     };
 
     //Fetch the user data
-    const { data } = useQuery<User>({ queryKey: ['user'] });
+    const { data } = useQuery({
+        queryKey: ['user'],
+        queryFn: () => getUser({ id: userAuth.id }),
+    });
+
     if (data)
         return (
             <div className="flex items-center">

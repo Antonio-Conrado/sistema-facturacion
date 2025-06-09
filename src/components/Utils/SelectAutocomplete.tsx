@@ -34,8 +34,8 @@ export default function SelectAutocomplete<T extends FieldValues>({
                     name={name}
                     control={control}
                     rules={{
-                        required: msg || false, // Si no se pasa 'msg', no será requerido
-                        validate: msg ? (value) => value !== 0 || msg : {}, // Condicionalmente validamos el valor
+                        required: msg || false,
+                        validate: msg ? (value) => value !== 0 || msg : {},
                     }}
                     render={({ field, fieldState }) => (
                         <Autocomplete
@@ -59,6 +59,11 @@ export default function SelectAutocomplete<T extends FieldValues>({
                                 />
                             )}
                             noOptionsText="No encontrado"
+                            slotProps={{
+                                popper: {
+                                    className: 'max-h-[180px] overflow-y-auto',
+                                },
+                            }}
                             sx={{
                                 '& .MuiInputBase-root': {
                                     padding: 0.3,
@@ -70,8 +75,7 @@ export default function SelectAutocomplete<T extends FieldValues>({
                                     color: '#ef4444',
                                     margin: 0,
                                     fontSize: '16px',
-                                    fontFamily:
-                                        'ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+                                    fontFamily: 'ui-sans-serif',
                                 },
                             }}
                         />
