@@ -1,6 +1,6 @@
 import { ModalAction, Role } from '@/data/index';
 import useToast from '@/hooks/useNotifications';
-import { StoredProduct, StoredProducts, User } from '@/types/index';
+import { StoredProduct, StoredProducts } from '@/types/index';
 import { useState } from 'react';
 import BasicTable from '../Utils/BasicTable';
 import { listProductHead } from '@/data/tableHeadData';
@@ -14,9 +14,15 @@ import SuspendProduct from './SuspendProduct';
 import InputFileUpload from '../Utils/InputFileUpload';
 import { uploadImageProductAPI } from '@/api/product/product';
 import { useQuery } from '@tanstack/react-query';
+import useAuth from '@/hooks/useAuth';
+import { getUser } from '@/api/user/user';
 
 export default function ProductsData({ data }: { data: StoredProducts }) {
-    const { data: user } = useQuery<User>({ queryKey: ['user'] });
+    const { userAuth } = useAuth();
+    const { data: user } = useQuery({
+        queryKey: ['user'],
+        queryFn: () => getUser({ id: userAuth.id }),
+    });
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
