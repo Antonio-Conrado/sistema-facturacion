@@ -17,7 +17,8 @@
       "@/context/*" : ["context/*"],
       "@/hooks/*" : ["hooks/*"],
       "@/config/*" : ["config/*"],
-      "@/data/*" : ["data/*"]
+      "@/data/*" : ["data/*"],
+      "@/store/*" : ["store/*"]
     },
 
     /* Bundler mode */
