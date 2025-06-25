@@ -204,7 +204,7 @@ const PurchasesDetailsSchema = z.array(
         subtotal: z.number(),
         storedProducts: z.object({
             detailsProducts: z.object({
-                image: z.string().url(), // Define directamente
+                image: z.string().url().nullable(),
                 products: z.object({
                     code: z.string(),
                     name: z.string(),
@@ -215,9 +215,9 @@ const PurchasesDetailsSchema = z.array(
 );
 
 export const PurchaseSchema = z.object({
-    id: z.number(),
-    usersId: z.number(),
-    suppliersId: z.number(),
+    id: z.number().optional(),
+    usersId: z.number().optional(),
+    suppliersId: z.number().optional(),
     iva: z.number(),
     invoiceNumber: z.number(),
     document: z.string().url().nullable(),
@@ -236,7 +236,6 @@ export type PurchaseDetails = z.infer<typeof PurchasesDetailsSchema>;
 
 //iva
 export type IvaList = {
-    id: number;
     value: number;
 }[];
 //schema and type generals
