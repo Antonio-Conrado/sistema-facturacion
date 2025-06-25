@@ -10,6 +10,7 @@ type AutoCompleteSearchProps<T> = {
     onChange: (value: T | null) => void;
     value: T | null;
     title: string;
+    isSelect?: boolean;
 };
 
 export default function AutoCompleteSearch<T>({
@@ -17,9 +18,10 @@ export default function AutoCompleteSearch<T>({
     onChange,
     value,
     title,
+    isSelect,
 }: AutoCompleteSearchProps<T>) {
     return (
-        <div className="flex flex-col gap-1 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
+        <div className="flex flex-col gap-1 md:flex-row items-start md:items-center md:gap-3 text-gray-800 w-full">
             <Autocomplete
                 disablePortal
                 options={options}
@@ -37,7 +39,7 @@ export default function AutoCompleteSearch<T>({
                     <TextField {...params} label={title} />
                 )}
                 noOptionsText="No encontrado"
-                className="w-40"
+                className={isSelect ? 'w-full' : 'w-40'}
                 sx={{
                     '& .MuiInputBase-root': { padding: 0.3 },
                     '& .MuiFormLabel-root': { color: '#1f2937' },
