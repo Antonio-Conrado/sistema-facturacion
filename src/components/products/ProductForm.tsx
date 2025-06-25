@@ -24,6 +24,7 @@ export default function ProductForm({
 }: ProductFormProps) {
     const addedFromModal = useAppStore((store) => store.addedFromModal);
     const isActiveModal = useAppStore((store) => store.isActiveModal);
+    const activeModalKey = useAppStore((store) => store.activeModalKey);
     const { categories, register, control, handleSubmit, errors, handleData } =
         useProductForm({ product, action, onClose });
 
@@ -153,7 +154,7 @@ export default function ProductForm({
             </form>
 
             {/* Show modal to add a category */}
-            {isActiveModal && (
+            {isActiveModal && activeModalKey === 'categories' && (
                 <BasicModal
                     openModal={isActiveModal}
                     onClose={() => addedFromModal(false, 'categories')}
