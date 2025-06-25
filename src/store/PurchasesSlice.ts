@@ -1,10 +1,7 @@
-import {
-    initialPurchase,
-    Purchase,
-    PurchasesSlice,
-} from '@/types/zustandTypes';
+import { RegisterPurchaseForm, PurchasesSlice } from '@/types/zustandTypes';
 import { calculateTransactionTotal } from '@/utils/calculateTransactionTotal ';
 import { StateCreator } from 'zustand';
+import { initialPurchase } from '../data';
 
 export const createPurchasesSlice: StateCreator<
     PurchasesSlice,
@@ -13,20 +10,39 @@ export const createPurchasesSlice: StateCreator<
     PurchasesSlice
 > = (set, get) => ({
     purchase: initialPurchase,
-    addPurchase: (newPurchase: Partial<Purchase>) => {
-        const currentPurchase = get().purchase;
+    addPurchase: (newPurchase: RegisterPurchaseForm) => {
+        const subtotal = newPurchase.detailsPurchases.reduce((acc, item) => {
+            return acc + item.subtotal;
+        }, 0);
 
-        const subtotal = currentPurchase.detailsPurchases.reduce(
-            (acc, item) => {
-                console.log(item);
-                return acc + item.subtotal;
-            },
-            0,
-        );
         set((state) => ({
             purchase: {
                 ...state.purchase,
                 ...newPurchase,
+                subtotal,
+                total: calculateTransactionTotal({
+                    subtotalDetails: subtotal,
+                    discount: newPurchase.discount,
+                    iva: newPurchase.iva,
+                }),
+            },
+        }));
+    },
+    removeProductFromPurchase: (id: number) => {
+        const currentPurchase = get().purchase;
+        const filteredDetails = currentPurchase.detailsPurchases.filter(
+            (product) => product.storedProductsId !== id,
+        );
+
+        const subtotal = filteredDetails.reduce(
+            (acc, item) => acc + item.subtotal,
+            0,
+        );
+
+        set((state) => ({
+            purchase: {
+                ...state.purchase,
+                detailsPurchases: filteredDetails,
                 subtotal,
                 total: calculateTransactionTotal({
                     subtotalDetails: subtotal,
