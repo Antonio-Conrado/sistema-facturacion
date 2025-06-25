@@ -15,6 +15,7 @@ type BasicTableProps<T> = {
     setPage: Dispatch<SetStateAction<number>>;
     setRowsPerPage: Dispatch<SetStateAction<number>>;
     children: React.ReactNode;
+    disablePagination?: boolean;
 };
 export default function BasicTable<T>({
     rows,
@@ -25,6 +26,7 @@ export default function BasicTable<T>({
     setPage,
     setRowsPerPage,
     children,
+    disablePagination,
 }: BasicTableProps<T>) {
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -50,19 +52,21 @@ export default function BasicTable<T>({
                     </TableBody>
                 </Table>
             </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={total ? total : rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                labelRowsPerPage="Filas por página"
-                labelDisplayedRows={({ from, to, count }) =>
-                    `${from}–${to} de ${count}`
-                }
-            />
+            {!disablePagination && (
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={total ? total : rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    labelRowsPerPage="Filas por página"
+                    labelDisplayedRows={({ from, to, count }) =>
+                        `${from}–${to} de ${count}`
+                    }
+                />
+            )}
         </Paper>
     );
 }
