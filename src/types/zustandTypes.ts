@@ -6,7 +6,7 @@ export type GeneralSlice = {
     addedFromModal: (isActiveModal: boolean, activeModalKey: ModalKey) => void;
 };
 
-export type DetailsTransaction = {
+export type RegisterDetailsTransaction = {
     storedProductsId: number;
     code: string;
     name: string;
@@ -20,31 +20,24 @@ export type DetailsTransaction = {
 
 //* Purchase */
 
-export type Purchase = {
-    invoiceNumber: number;
-    date: Date;
+export type RegisterPurchaseForm = {
+    usersId: number;
     suppliersId: number;
+    invoiceNumber: number;
+    date: string;
     iva: number;
-
-    detailsPurchases: DetailsTransaction[];
+    detailsPurchases: RegisterDetailsTransaction[];
     subtotal: number;
     discount: number;
     total: number;
 };
 
-export type PurchasesSlice = {
-    purchase: Purchase;
-    addPurchase: (purchase: Purchase) => void;
+export type RegisterPurchaseAPI = Omit<RegisterPurchaseForm, 'date'> & {
+    date: Date;
 };
 
-//initial data
-export const initialPurchase: Purchase = {
-    invoiceNumber: 0,
-    date: new Date(Date.now()),
-    suppliersId: 0,
-    iva: 0,
-    detailsPurchases: [],
-    subtotal: 0,
-    discount: 0,
-    total: 0,
+export type PurchasesSlice = {
+    purchase: RegisterPurchaseForm;
+    addPurchase: (purchase: RegisterPurchaseForm) => void;
+    removeProductFromPurchase: (id: number) => void;
 };
