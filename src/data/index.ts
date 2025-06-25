@@ -1,3 +1,4 @@
+import { RegisterPurchaseForm } from '@/types/zustandTypes';
 import { IvaList, LinksSideBar } from '../types';
 
 import {
@@ -126,7 +127,17 @@ export enum ModalAction {
     View = 'view',
 }
 
-export const ivaList: IvaList = [
-    { id: 0, value: 0 },
-    { id: 1, value: 15 },
-];
+export const ivaList: IvaList = [{ value: 0 }, { value: 15 }];
+
+//initial data
+export const initialPurchase: RegisterPurchaseForm = {
+    usersId: 0,
+    suppliersId: 0,
+    invoiceNumber: 0,
+    date: new Date().toISOString().split('T')[0],
+    iva: 0,
+    detailsPurchases: [],
+    subtotal: 0,
+    discount: 0,
+    total: 0,
+};

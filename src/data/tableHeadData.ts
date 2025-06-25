@@ -77,4 +77,5 @@ export const listPurchaseHeaders = [
     'Cantidad',
     'Descuento',
     'SubTotal',
+    'Acciones',
 ];
