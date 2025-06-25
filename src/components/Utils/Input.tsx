@@ -13,18 +13,23 @@ type InputProps<T extends FieldValues> = {
     name: Path<T>; // 'name' must match a key in the form data object
     msg?: string;
     type: string;
+    max?: string;
+    value?: string | number;
+    isPercentage?: boolean;
     isReadOnly: boolean;
     validate?: RegisterOptions<T>;
     register: UseFormRegister<T>; // 'register' is typed based on the form data shape
     errors?: FieldErrors<T>; // 'errors' is typed based on the form data shape
 };
 
-// The component works with the form data type passed in as 'T'
 export default function Input<T extends FieldValues>({
     title,
     name,
     msg = '',
     type,
+    max,
+    value,
+    isPercentage,
     isReadOnly,
     validate,
     errors = {},
@@ -35,21 +40,24 @@ export default function Input<T extends FieldValues>({
             <label htmlFor={String(name)} className="w-24  font-semibold">
                 {title}:
             </label>
-            <div className="flex flex-col w-full">
+            <div className="flex w-full  items-center gap-2">
                 <input
                     type={type}
                     className={`border rounded-md p-2 w-full ${
                         errors?.[name] ? 'border-red-500' : ''
                     }`}
                     min={type === 'number' ? 1 : ''}
+                    max={max}
                     id={String(name)}
                     readOnly={isReadOnly}
+                    defaultValue={value}
                     placeholder={`Ingresa ${title.toLowerCase()}`}
                     {...register(name, {
                         required: msg,
                         ...validate,
                     })}
                 />
+                {isPercentage && <span>%</span>}
                 {errors?.[name]?.message && (
                     <ErrorMessage>{String(errors[name]?.message)}</ErrorMessage>
                 )}
