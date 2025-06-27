@@ -68,7 +68,6 @@ export const PurchaseHead = [
 
 //purchase
 export const listPurchaseHeaders = [
-    'Id',
     'Imagen',
     'Código',
     'Nombre',
