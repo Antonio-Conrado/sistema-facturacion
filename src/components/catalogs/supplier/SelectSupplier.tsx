@@ -1,5 +1,4 @@
 import AutoCompleteSearch from '@/components/Utils/AutoCompleteSearch';
-import BasicModal from '@/components/Utils/BasicModal';
 import { useAppStore } from '@/store/useAppStore';
 import { SearchFilterValues, Suppliers } from '@/types/index';
 import { Add } from '@mui/icons-material';
@@ -10,8 +9,6 @@ import {
     FieldValues,
     Path,
 } from 'react-hook-form';
-import SupplierForm from './SupplierForm';
-import { ModalAction } from '@/data/index';
 import { Dispatch } from 'react';
 
 type SelectSupplierProps<T extends FieldValues> = {
@@ -33,9 +30,6 @@ export default function SelectSupplier<T extends FieldValues>({
     const addPurchase = useAppStore((store) => store.addPurchase);
 
     const addedFromModal = useAppStore((store) => store.addedFromModal);
-    const isActiveModal = useAppStore((store) => store.isActiveModal);
-    const activeModalKey = useAppStore((store) => store.activeModalKey);
-
     const handleSupplierChange = (suppliersId: number | null) => {
         setFilters((prev) => ({
             ...prev,
@@ -89,19 +83,6 @@ export default function SelectSupplier<T extends FieldValues>({
                 )}
 
                 <Add onClick={() => addedFromModal(true, 'suppliers')} />
-
-                {/* show modal to add  a supplier */}
-                {isActiveModal && activeModalKey === 'suppliers' && (
-                    <BasicModal
-                        openModal={isActiveModal}
-                        onClose={() => addedFromModal(false, 'suppliers')}
-                    >
-                        <SupplierForm
-                            onClose={() => addedFromModal(false, 'suppliers')}
-                            action={ModalAction.Add}
-                        />
-                    </BasicModal>
-                )}
             </div>
         </div>
     );
