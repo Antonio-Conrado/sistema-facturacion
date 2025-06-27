@@ -29,6 +29,7 @@ import ProductView from './views/app/products/ProductView';
 import PurchaseHistoryView from './views/app/purchases/PurchaseHistoryView';
 import PurchaseDetailView from './views/app/purchases/PurchaseView';
 import { Role } from './data';
+import RegisterPurchaseView from './views/app/purchases/RegisterPurchaseView';
 
 export default function Router() {
     return (
@@ -73,7 +74,9 @@ export default function Router() {
                             <Route
                                 path="/ventas"
                                 element={
-                                    <ValidateRole roles={[Role.admin, Role.employee]}>
+                                    <ValidateRole
+                                        roles={[Role.admin, Role.employee]}
+                                    >
                                         <SalesViews />
                                     </ValidateRole>
                                 }
@@ -83,7 +86,9 @@ export default function Router() {
                             <Route
                                 path="productos"
                                 element={
-                                    <ValidateRole roles={[Role.admin, Role.employee]}>
+                                    <ValidateRole
+                                        roles={[Role.admin, Role.employee]}
+                                    >
                                         <ProductView />
                                     </ValidateRole>
                                 }
@@ -91,9 +96,21 @@ export default function Router() {
 
                             {/* Purchases */}
                             <Route
+                                path="compras"
+                                element={
+                                    <ValidateRole
+                                        roles={[Role.admin, Role.employee]}
+                                    >
+                                        <RegisterPurchaseView />
+                                    </ValidateRole>
+                                }
+                            />
+                            <Route
                                 path="historial-compras"
                                 element={
-                                    <ValidateRole roles={[Role.admin, Role.employee]}>
+                                    <ValidateRole
+                                        roles={[Role.admin, Role.employee]}
+                                    >
                                         <PurchaseHistoryView />
                                     </ValidateRole>
                                 }
@@ -101,7 +118,9 @@ export default function Router() {
                             <Route
                                 path="historial-compras/:id"
                                 element={
-                                    <ValidateRole roles={[Role.admin, Role.employee]}>
+                                    <ValidateRole
+                                        roles={[Role.admin, Role.employee]}
+                                    >
                                         <PurchaseDetailView />
                                     </ValidateRole>
                                 }
@@ -111,7 +130,9 @@ export default function Router() {
                             <Route
                                 path="/catalogos/categorias"
                                 element={
-                                    <ValidateRole roles={[Role.admin, Role.employee]}>
+                                    <ValidateRole
+                                        roles={[Role.admin, Role.employee]}
+                                    >
                                         <CategoryView />
                                     </ValidateRole>
                                 }
@@ -119,7 +140,9 @@ export default function Router() {
                             <Route
                                 path="/catalogos/proveedores"
                                 element={
-                                    <ValidateRole roles={[Role.admin, Role.employee]}>
+                                    <ValidateRole
+                                        roles={[Role.admin, Role.employee]}
+                                    >
                                         <SupplierView />
                                     </ValidateRole>
                                 }
@@ -139,7 +162,9 @@ export default function Router() {
                             <Route
                                 path="/configuracion/informacion-personal"
                                 element={
-                                    <ValidateRole roles={[Role.admin, Role.employee]}>
+                                    <ValidateRole
+                                        roles={[Role.admin, Role.employee]}
+                                    >
                                         <UserView />
                                     </ValidateRole>
                                 }
