@@ -1,11 +1,8 @@
 import { Add } from '@mui/icons-material';
 import AutoCompleteSearch from '../Utils/AutoCompleteSearch';
-import BasicModal from '../Utils/BasicModal';
-import ProductForm from './ProductForm';
 import { StoredProducts } from '@/types/index';
 import { useAppStore } from '@/store/useAppStore';
 import useTransaction from '@/hooks/useAddTransactionProduct';
-import { ModalAction } from '@/data/index';
 import { SearchFilterValues } from '../../types/index';
 import {
     Control,
@@ -33,8 +30,6 @@ export default function TransactionProductSelector<T extends FieldValues>({
     allowAddProduct,
 }: TransactionProductSelectorProps<T>) {
     const addedFromModal = useAppStore((store) => store.addedFromModal);
-    const isActiveModal = useAppStore((store) => store.isActiveModal);
-    const activeModalKey = useAppStore((store) => store.activeModalKey);
 
     const { handleAddProductById } = useTransaction({
         transactionType: transactionType,
@@ -86,20 +81,6 @@ export default function TransactionProductSelector<T extends FieldValues>({
                     )}
                     {allowAddProduct && (
                         <Add onClick={() => addedFromModal(true, 'products')} />
-                    )}
-                    {/* show modal to add  a products */}
-                    {isActiveModal && activeModalKey === 'products' && (
-                        <BasicModal
-                            openModal={isActiveModal}
-                            onClose={() => addedFromModal(false, 'products')}
-                        >
-                            <ProductForm
-                                onClose={() =>
-                                    addedFromModal(false, 'products')
-                                }
-                                action={ModalAction.Add}
-                            />
-                        </BasicModal>
                     )}
                 </div>
             </div>
