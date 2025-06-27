@@ -1,10 +1,11 @@
-import { useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import useToast from '@/hooks/useNotifications';
-import { Categories, ProductForm, StoredProduct } from '@/types/index';
+import { ProductForm, StoredProduct } from '@/types/index';
 import { ModalAction } from '@/data/index';
 import { CreateProductAPI, UpdateProductAPI } from '@/api/product/product';
+import { getCategoriesAPI } from '@/api/catalogs/category';
 
 type useProductFormProps = {
     product: StoredProduct | undefined; // Undefined because it is an option for creation
@@ -21,7 +22,10 @@ export default function useProductForm({
     const queryClient = useQueryClient();
 
     //return only category with status is true
-    const categoriesAPI = queryClient.getQueryData<Categories>(['categories']);
+    const { data: categoriesAPI } = useQuery({
+        queryKey: ['categories'],
+        queryFn: getCategoriesAPI,
+    });
     let categories;
 
     if (categoriesAPI) {
