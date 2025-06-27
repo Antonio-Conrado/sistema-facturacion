@@ -17,7 +17,7 @@ export default function TableBodyCellPurchases({
             <TableCell align="center">{row.suppliers.name}</TableCell>
             <TableCell align="center">{formatDate(row.date)}</TableCell>
             <TableCell align="center">{row.discount}%</TableCell>
-            <TableCell align="center">{row.iva.rate}%</TableCell>
+            <TableCell align="center">{row.iva}%</TableCell>
             <TableCell align="center">{formatCurrency(row.total)}</TableCell>
             <TableCell align="center">
                 {row.status ? (

@@ -23,7 +23,7 @@ export default function PurchaseTotalDetails({
             />
             <ReadOnlyInput
                 title="Iva"
-                value={purchase.iva.rate}
+                value={purchase.iva}
                 dataType="currency"
                 isWithPercentage={true}
                 name="iva"
