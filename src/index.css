@@ -77,3 +77,10 @@
 .btn-general:hover {
     background-color: rgb(21 94 117 / var(--tw-bg-opacity, 1));
 }
+
+.input-read-only {
+    @apply bg-transparent border-0 text-center w-full focus:outline-none focus:ring-0 cursor-default;
+}
+.input {
+    @apply border p-1 rounded-md w-16 text-center;
+}
