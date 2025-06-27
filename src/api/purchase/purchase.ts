@@ -1,3 +1,4 @@
+import { RegisterPurchaseAPI } from './../../types/zustandTypes';
 import api from '@/config/axios';
 import {
     Purchase,
@@ -96,6 +97,17 @@ export async function filterPurchaseByTermAPI<
         if (result.success) {
             return result.data;
         }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
+export async function createPurchaseAPI(purchase: RegisterPurchaseAPI) {
+    try {
+        const { data } = await api.post('/purchases', purchase);
+        return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
