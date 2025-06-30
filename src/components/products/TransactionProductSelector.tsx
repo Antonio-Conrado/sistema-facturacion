@@ -10,7 +10,9 @@ import {
     FieldErrors,
     FieldValues,
     Path,
+    UseFormSetValue,
 } from 'react-hook-form';
+import { RegisterPurchaseForm } from '@/types/zustandTypes';
 
 type TransactionProductSelectorProps<T extends FieldValues> = {
     filters: Partial<SearchFilterValues>;
@@ -18,6 +20,7 @@ type TransactionProductSelectorProps<T extends FieldValues> = {
     transactionType: 'PURCHASES' | 'SALES';
     control: Control<T, unknown, T>;
     errors: FieldErrors<T>;
+    setValue: UseFormSetValue<RegisterPurchaseForm>;
     allowAddProduct: boolean;
 };
 
@@ -27,12 +30,14 @@ export default function TransactionProductSelector<T extends FieldValues>({
     transactionType,
     control,
     errors,
+    setValue,
     allowAddProduct,
 }: TransactionProductSelectorProps<T>) {
     const addedFromModal = useAppStore((store) => store.addedFromModal);
 
     const { handleAddProductById } = useTransaction({
         transactionType: transactionType,
+        setValue: setValue,
     });
 
     const handleProductChange = (productId: number | null) => {
