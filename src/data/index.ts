@@ -141,3 +141,13 @@ export const initialPurchase: RegisterPurchaseForm = {
     discount: 0,
     total: 0,
 };
+
+export const initialAuthState = {
+    id: 0,
+    email: '',
+    status: false,
+    roleId: 0,
+    roles: {
+        name: '',
+    },
+};
