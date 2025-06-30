@@ -1,5 +1,17 @@
 //* general */
-export type ModalKey = 'suppliers' | 'products' | 'categories' | 'default';
+export enum ModalKeyList {
+    PurchaseInvoice = 'purchaseInvoice',
+    SaleInvoice = 'saleInvoice',
+}
+
+export type ModalKey =
+    | 'suppliers'
+    | 'products'
+    | 'categories'
+    | 'purchaseInvoice'
+    | 'saleInvoice'
+    | 'default';
+
 export type GeneralSlice = {
     activeModalKey: ModalKey;
     isActiveModal: boolean;
@@ -38,6 +50,9 @@ export type RegisterPurchaseAPI = Omit<RegisterPurchaseForm, 'date'> & {
 
 export type PurchasesSlice = {
     purchase: RegisterPurchaseForm;
+    finalizedPurchaseId: number;
     addPurchase: (purchase: RegisterPurchaseForm) => void;
     removeProductFromPurchase: (id: number) => void;
+    resetPurchase: () => void;
+    saveFinalizedPurchaseId: (purchaseId: number) => void;
 };
