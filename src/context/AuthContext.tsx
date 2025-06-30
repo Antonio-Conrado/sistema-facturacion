@@ -3,24 +3,19 @@ import { userAuthType } from '../types';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUserAuth } from '@/api/auth/auth';
 import { useNavigate } from 'react-router-dom';
+import { initialAuthState } from '../data/index';
 
 type AuthContextType = {
     userAuth: userAuthType;
+    setAuth: React.Dispatch<React.SetStateAction<userAuthType>>;
     loading: boolean;
     isError: boolean;
     setTokenJWT: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 const initialValues: AuthContextType = {
-    userAuth: {
-        id: 0,
-        email: '',
-        status: false,
-        roleId: 0,
-        roles: {
-            name: '',
-        },
-    },
+    userAuth: initialAuthState,
+    setAuth: () => {},
     loading: true,
     isError: false,
     setTokenJWT: () => '',
@@ -62,7 +57,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         <AuthContext.Provider
-            value={{ userAuth, loading, isError, setTokenJWT }}
+            value={{ userAuth, setAuth, loading, isError, setTokenJWT }}
         >
             {children}
         </AuthContext.Provider>
