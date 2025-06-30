@@ -4,14 +4,20 @@ import { useQuery } from '@tanstack/react-query';
 import { getProductsApi } from '@/api/product/product';
 import { calculateSubtotalOfDetails } from '@/utils/calculateSubtotalOfDetails';
 import { StoredProduct } from '../types';
-import { RegisterDetailsTransaction } from '@/types/zustandTypes';
+import {
+    RegisterDetailsTransaction,
+    RegisterPurchaseForm,
+} from '@/types/zustandTypes';
+import { UseFormSetValue } from 'react-hook-form';
 
 type UseTransactionProps = {
     transactionType: 'PURCHASES' | 'SALES';
+    setValue: UseFormSetValue<RegisterPurchaseForm>;
 };
 
 export default function useAddTransactionProduct({
     transactionType,
+    setValue,
 }: UseTransactionProps) {
     const addPurchase = useAppStore((store) => store.addPurchase);
     const purchase = useAppStore((store) => store.purchase);
@@ -73,6 +79,23 @@ export default function useAddTransactionProduct({
                 ...purchase,
                 detailsPurchases: [...purchase.detailsPurchases, newDetail],
             });
+
+            setValue(
+                `detailsPurchases.${newDetail.storedProductsId}.purchasePrice`,
+                newDetail.purchasePrice,
+            );
+            setValue(
+                `detailsPurchases.${newDetail.storedProductsId}.salePrice`,
+                newDetail.salePrice,
+            );
+            setValue(
+                `detailsPurchases.${newDetail.storedProductsId}.amount`,
+                newDetail.amount,
+            );
+            setValue(
+                `detailsPurchases.${newDetail.storedProductsId}.discount`,
+                newDetail.discount,
+            );
         } else {
             console.log('sales');
         }
