@@ -38,6 +38,7 @@ export default function FormPurchases({
         register,
         control,
         watch,
+        setValue,
     } = formMethods;
 
     const date = watch('date');
@@ -101,6 +102,7 @@ export default function FormPurchases({
                             transactionType={'PURCHASES'}
                             control={control}
                             errors={errors}
+                            setValue={setValue}
                             allowAddProduct={true}
                         />
                     </div>
