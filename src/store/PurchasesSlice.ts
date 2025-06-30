@@ -10,14 +10,14 @@ export const createPurchasesSlice: StateCreator<
     PurchasesSlice
 > = (set, get) => ({
     purchase: initialPurchase,
+    finalizedPurchaseId: 0,
     addPurchase: (newPurchase: RegisterPurchaseForm) => {
         const subtotal = newPurchase.detailsPurchases.reduce((acc, item) => {
             return acc + item.subtotal;
         }, 0);
 
-        set((state) => ({
+        set(() => ({
             purchase: {
-                ...state.purchase,
                 ...newPurchase,
                 subtotal,
                 total: calculateTransactionTotal({
@@ -50,6 +50,16 @@ export const createPurchasesSlice: StateCreator<
                     iva: get().purchase.iva,
                 }),
             },
+        }));
+    },
+    resetPurchase: () => {
+        set(() => ({
+            purchase: initialPurchase,
+        }));
+    },
+    saveFinalizedPurchaseId: (purchaseId: number) => {
+        set(() => ({
+            finalizedPurchaseId: purchaseId,
         }));
     },
 });
