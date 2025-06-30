@@ -8,12 +8,11 @@ import InputEmail from '@/components/authForm/InputEmail';
 import InputPassword from '@/components/authForm/InputPassword';
 import Spinner from '@/components/Utils/Spinner';
 import useAuth from '@/hooks/useAuth';
-import { Role } from '@/data/index';
 
 export default function LoginViews() {
     const navigate = useNavigate();
     const toast = useToast();
-    const { userAuth, setTokenJWT } = useAuth();
+    const { setTokenJWT } = useAuth();
     const {
         register,
         reset,
@@ -31,21 +30,9 @@ export default function LoginViews() {
         onError: (error) => {
             toast.error(error.message);
         },
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
             if (data) localStorage.setItem('token', data);
-
             setTokenJWT(localStorage.getItem('token'));
-
-            if (
-                userAuth.roles.name !== Role.admin &&
-                userAuth.roles.name !== Role.employee
-            ) {
-                toast.error(
-                    `El rol ${userAuth.roles.name} no es válido en el sistema. Debe ser uno de los siguientes: ${Role.admin} o ${Role.employee}`,
-                );
-                return;
-            }
-
             reset();
             toast.success('Sesión iniciada correctamente');
             navigate('/ventas');

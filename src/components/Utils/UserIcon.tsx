@@ -6,12 +6,15 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { getUser } from '@/api/user/user';
 import useAuth from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { initialAuthState } from '@/data/index';
 
 export default function UserIcon() {
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
-    const { userAuth } = useAuth();
+    const { userAuth, setAuth } = useAuth();
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -22,8 +25,10 @@ export default function UserIcon() {
     const queryClient = useQueryClient();
     const handleCloseSession = () => {
         localStorage.removeItem('token');
-        queryClient.invalidateQueries({ queryKey: ['userAuth'] });
-        queryClient.invalidateQueries({ queryKey: ['user'] });
+        queryClient.removeQueries({ queryKey: ['userAuth'] });
+        queryClient.removeQueries({ queryKey: ['user'] });
+        setAuth(initialAuthState);
+        navigate('/login');
     };
 
     //Fetch the user data
