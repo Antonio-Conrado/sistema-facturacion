@@ -234,6 +234,99 @@ export const PurchaseSchema = z.object({
 export type Purchase = z.infer<typeof PurchaseSchema>;
 export type PurchaseDetails = z.infer<typeof PurchasesDetailsSchema>;
 
+// sales
+export const SaleHistoryTableSchema = z.object({
+    id: z.number(),
+    iva: z.number(),
+    cancellationReason: z.string().nullable(),
+    annulledAt: z.string().datetime().nullable(),
+    invoiceNumber: z.number(),
+    document: z.string().nullable(),
+    date: z.string().datetime(),
+    subtotal: z.number(),
+    discount: z.number(),
+    total: z.number(),
+    status: z.boolean(),
+    users: z.object({
+        name: z.string(),
+        surname: z.string(),
+    }),
+    paymentMethods: z.object({
+        name: z.string(),
+    }),
+});
+
+export const SalesHistoryTableSchema = z.array(SaleHistoryTableSchema);
+
+export const SalesHistorySchema = z.object({
+    sales: SalesHistoryTableSchema,
+    total: z.number(),
+});
+export type SaleHistoryTable = z.infer<typeof SaleHistoryTableSchema>;
+export type SalesHistoryTable = z.infer<typeof SalesHistoryTableSchema>;
+export type SalesHistory = z.infer<typeof SalesHistorySchema>;
+
+// Full sale record with detailed product information
+export const DetailsSalesSchema = z.array(
+    z.object({
+        id: z.number(),
+        salesId: z.number(),
+        storedProductsId: z.number(),
+        price: z.number(),
+        amount: z.number(),
+        subtotal: z.number(),
+        discount: z.number(),
+        storedProducts: z.object({
+            detailsProducts: z.object({
+                image: z.string().nullable(),
+                products: z.object({
+                    name: z.string(),
+                    code: z.string(),
+                }),
+            }),
+        }),
+    }),
+);
+
+export const SaleSchema = z.object({
+    id: z.number(),
+    usersId: z.number(),
+    paymentMethodId: z.number(),
+    iva: z.number(),
+    transactionReference: z.string().nullable(),
+    cancellationReason: z.string().nullable(),
+    annulledAt: z.string().datetime().nullable(),
+    invoiceNumber: z.number(),
+    document: z.string().nullable(),
+    date: z.string().datetime(),
+    subtotal: z.number(),
+    discount: z.number(),
+    total: z.number(),
+    status: z.boolean(),
+    users: z.object({
+        name: z.string(),
+        surname: z.string(),
+    }),
+    paymentMethods: z.object({
+        name: z.string(),
+    }),
+    detailsSales: DetailsSalesSchema,
+});
+export type SaleDetails = z.infer<typeof DetailsSalesSchema>;
+export type Sale = z.infer<typeof SaleSchema>;
+
+//payment methods
+export const PaymentMethodSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    status: z.boolean(),
+});
+
+export const PaymentMethodsSchema = z.array(PaymentMethodSchema);
+
+export type PaymentMethod = z.infer<typeof PaymentMethodSchema>;
+export type PaymentMethods = z.infer<typeof PaymentMethodsSchema>;
+
 //iva
 export type IvaList = {
     value: number;
@@ -268,6 +361,7 @@ export enum SearchFilterEnum {
     usersId = 'usersId',
     ivaId = 'ivaId',
     productId = 'productId',
+    paymentMethodId = 'paymentMethodId',
 }
 
 export type SearchFilterValues = {
@@ -276,4 +370,5 @@ export type SearchFilterValues = {
     [SearchFilterEnum.usersId]: number | null;
     [SearchFilterEnum.ivaId]: number | null;
     [SearchFilterEnum.productId]: number | null;
+    [SearchFilterEnum.paymentMethodId]: number | null;
 };
