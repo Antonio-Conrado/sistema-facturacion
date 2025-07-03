@@ -78,3 +78,37 @@ export const listPurchaseHeaders = [
     'SubTotal',
     'Acciones',
 ];
+
+//sales history
+export const listSalesHistoryHead = [
+    '№ de factura',
+    'usuario',
+    'método de pago',
+    'Fecha',
+    'Descuento',
+    'Iva',
+    'Total',
+    'Estado',
+    'Acciones',
+];
+
+export const SaleHead = [
+    'Imagen',
+    'Código',
+    'Nombre',
+    'Precio',
+    'Cantidad',
+    'Descuento',
+    'Subtotal',
+];
+
+export const listSaleHeaders = [
+    'Imagen',
+    'Código',
+    'Nombre',
+    'Precio',
+    'Cantidad',
+    'Descuento',
+    'SubTotal',
+    'Acciones',
+];

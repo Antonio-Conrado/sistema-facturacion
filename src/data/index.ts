@@ -151,3 +151,8 @@ export const initialAuthState = {
         name: '',
     },
 };
+
+export enum PaymentMethodsLabel {
+    cash = 'Efectivo',
+    bankTransfer = 'Transferencia Bancaria',
+}
