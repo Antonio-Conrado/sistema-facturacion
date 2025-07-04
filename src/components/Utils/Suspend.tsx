@@ -1,11 +1,15 @@
 type SuspendProps = {
+    label?: string;
     status: boolean;
+    children?: React.ReactElement;
     onClose: () => void;
-    handleSuspend: () => void;
+    handleSuspend?: () => void;
 };
 
 export default function Suspend({
+    label,
     status,
+    children,
     onClose,
     handleSuspend,
 }: SuspendProps) {
@@ -14,7 +18,9 @@ export default function Suspend({
             <div className="pb-5 px-2">
                 {status ? (
                     <p className="text-gray-800 text-lg">
-                        ¿Estás seguro que deseas suspenderlo?
+                        {label
+                            ? `${label}`
+                            : '¿Estás seguro que deseas suspenderlo?'}
                     </p>
                 ) : (
                     <p className="text-gray-800 text-lg">
@@ -23,14 +29,21 @@ export default function Suspend({
                 )}
             </div>
 
-            <div className="flex justify-end gap-2 ">
-                <button className="btn-confirm w-fit" onClick={handleSuspend}>
-                    Confirmar
-                </button>
-                <button className="btn-cancel w-fit" onClick={onClose}>
-                    Cancelar
-                </button>
-            </div>
+            {children}
+
+            {!children && (
+                <div className="flex justify-end gap-2 ">
+                    <button
+                        className="btn-confirm w-fit"
+                        onClick={handleSuspend}
+                    >
+                        Confirmar
+                    </button>
+                    <button className="btn-cancel w-fit" onClick={onClose}>
+                        Cancelar
+                    </button>
+                </div>
+            )}
         </>
     );
 }
