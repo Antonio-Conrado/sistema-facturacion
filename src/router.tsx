@@ -30,6 +30,8 @@ import PurchaseHistoryView from './views/app/purchases/PurchaseHistoryView';
 import PurchaseDetailView from './views/app/purchases/PurchaseView';
 import { Role } from './data';
 import RegisterPurchaseView from './views/app/purchases/RegisterPurchaseView';
+import SaleHistoryView from './views/app/sales/SaleHistoryView';
+import SaleDetailView from './views/app/sales/SaleView';
 
 export default function Router() {
     return (
@@ -78,6 +80,28 @@ export default function Router() {
                                         roles={[Role.admin, Role.employee]}
                                     >
                                         <SalesViews />
+                                    </ValidateRole>
+                                }
+                            />
+
+                            <Route
+                                path="/historial-ventas"
+                                element={
+                                    <ValidateRole
+                                        roles={[Role.admin, Role.employee]}
+                                    >
+                                        <SaleHistoryView />
+                                    </ValidateRole>
+                                }
+                            />
+
+                            <Route
+                                path="/historial-ventas/:id"
+                                element={
+                                    <ValidateRole
+                                        roles={[Role.admin, Role.employee]}
+                                    >
+                                        <SaleDetailView />
                                     </ValidateRole>
                                 }
                             />
