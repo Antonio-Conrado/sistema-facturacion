@@ -36,32 +36,30 @@ export default function Input<T extends FieldValues>({
     register,
 }: InputProps<T>) {
     return (
-        <div className="flex flex-col gap-1 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
+        <div className="flex flex-col gap-1  items-start md:gap-3 text-gray-800">
             <label htmlFor={String(name)} className="w-24  font-semibold">
-                {title}:
+                {title}
             </label>
-            <div className="flex w-full  items-center gap-2">
-                <input
-                    type={type}
-                    className={`border rounded-md p-2 w-full ${
-                        errors?.[name] ? 'border-red-500' : ''
-                    }`}
-                    min={type === 'number' ? 1 : ''}
-                    max={max}
-                    id={String(name)}
-                    readOnly={isReadOnly}
-                    defaultValue={value}
-                    placeholder={`Ingresa ${title.toLowerCase()}`}
-                    {...register(name, {
-                        required: msg,
-                        ...validate,
-                    })}
-                />
-                {isPercentage && <span>%</span>}
-                {errors?.[name]?.message && (
-                    <ErrorMessage>{String(errors[name]?.message)}</ErrorMessage>
-                )}
-            </div>
+            <input
+                type={type}
+                className={`border rounded-md p-2 w-full ${
+                    errors?.[name] ? 'border-red-500' : ''
+                }`}
+                min={type === 'number' ? 1 : ''}
+                max={max}
+                id={String(name)}
+                readOnly={isReadOnly}
+                defaultValue={value}
+                placeholder={`Ingresa ${title.toLowerCase()}`}
+                {...register(name, {
+                    required: msg,
+                    ...validate,
+                })}
+            />
+            {isPercentage && <span>%</span>}
+            {errors?.[name]?.message && (
+                <ErrorMessage>{String(errors[name]?.message)}</ErrorMessage>
+            )}
         </div>
     );
 }
