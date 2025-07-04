@@ -37,7 +37,7 @@ export default function ReadOnlyInput<T>({
         <>
             <div className="flex flex-col gap-1 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
                 <label htmlFor={name} className="w-24  font-semibold">
-                    {title}:
+                    {title}
                 </label>
                 <div className="flex flex-col w-full">
                     <input
