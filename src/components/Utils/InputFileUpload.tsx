@@ -30,11 +30,13 @@ type InputFileUploadProps = {
         { id?: number; file: File }
     >;
     id?: number;
+    width?: string;
 };
 export default function InputFileUpload({
     text,
     infoCache,
     id,
+    width,
     mutationFn,
 }: InputFileUploadProps) {
     const toast = useToast();
@@ -72,7 +74,7 @@ export default function InputFileUpload({
             variant="contained"
             tabIndex={-1}
             startIcon={<CloudUploadIcon />}
-            className="w-2/4"
+            className={width || 'w-2/4 '}
             sx={{
                 background: '#7e22ce',
                 textTransform: 'lowercase',
