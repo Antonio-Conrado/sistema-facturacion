@@ -25,9 +25,9 @@ export default function SelectAutocomplete<T extends FieldValues>({
     control,
 }: SelectAutocompleteProps<T>) {
     return (
-        <div className="flex flex-col gap-1 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
+        <div className="flex flex-col gap-1  items-start  md:gap-3 text-gray-800">
             <label htmlFor={name} className="w-24 font-semibold">
-                {title}:
+                {title}
             </label>
             <div className="flex flex-col w-full">
                 <Controller
@@ -75,7 +75,8 @@ export default function SelectAutocomplete<T extends FieldValues>({
                                     color: '#ef4444',
                                     margin: 0,
                                     fontSize: '16px',
-                                    fontFamily: 'ui-sans-serif',
+                                    fontFamily:
+                                        'ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
                                 },
                             }}
                         />
