@@ -2,11 +2,11 @@ import { Roles, User } from '@/types/index';
 import { useForm } from 'react-hook-form';
 import UserForm from '../businessData/UserForm';
 import InputEmailsForm from '../Utils/InputEmailForm';
-import Select from '../Utils/Select';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createUserAPI } from '@/api/user/user';
 import useToast from '@/hooks/useNotifications';
 import ErrorMessage from '../Utils/ErrorMessage';
+import SelectAutocomplete from '../Utils/SelectAutocomplete';
 
 type RegisterUserProps = {
     roles: Roles;
@@ -26,6 +26,7 @@ export default function RegisterUser({ roles, onClose }: RegisterUserProps) {
     const {
         register,
         handleSubmit,
+        control,
         formState: { errors },
     } = useForm({ defaultValues: initialValues });
 
@@ -37,7 +38,7 @@ export default function RegisterUser({ roles, onClose }: RegisterUserProps) {
             toast.error(error.message);
         },
         onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: ['AllUsers'] });;
+            queryClient.invalidateQueries({ queryKey: ['AllUsers'] });
             if (data) toast.success(data);
             onClose();
         },
@@ -64,14 +65,12 @@ export default function RegisterUser({ roles, onClose }: RegisterUserProps) {
                         <InputEmailsForm
                             isReadOnly={false}
                             errors={errors}
+                            requiredMsg="El email es obligatorio"
                             register={register}
                         />
-                        <div className="flex flex-col gap-2 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
-                            <label
-                                htmlFor="password"
-                                className="w-24 font-semibold"
-                            >
-                                Contraseña:
+                        <div className="flex flex-col gap-2 items-start md:gap-3 text-gray-800">
+                            <label htmlFor="password" className="font-semibold">
+                                Contraseña
                             </label>
                             <div className="flex flex-col w-full">
                                 <input
@@ -98,24 +97,24 @@ export default function RegisterUser({ roles, onClose }: RegisterUserProps) {
                                 )}
                             </div>
                         </div>
-                        <Select
+
+                        <SelectAutocomplete
                             title="Rol"
                             name="roleId"
+                            msg="El rol es obligatorio"
                             options={roles.map((role) => ({
                                 value: role.id,
                                 label: role.name,
                             }))}
-                            msg="El rol es obligatorio"
                             isReadOnly={false}
-                            errors={errors}
-                            register={register}
+                            control={control}
                         />
                     </div>
                     <div className="flex justify-center pt-5">
                         <input
                             type="submit"
                             value={'Guardar cambios'}
-                            className="btn-confirm w-2/4"
+                            className="btn-confirm "
                         />
                     </div>
                 </form>
