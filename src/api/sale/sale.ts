@@ -1,5 +1,6 @@
 import api from '@/config/axios';
 import { Sale, SaleSchema, SalesHistorySchema } from '@/types/index';
+import { RegisterSaleAPI } from '@/types/zustandTypes';
 import { isAxiosError } from 'axios';
 
 export async function getSalesApi({
@@ -29,6 +30,18 @@ export async function getSaleDetailsApi(id: number) {
         if (result.success) {
             return result.data;
         }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
+export async function getLastInvoiceNumber() {
+    try {
+        const { data } = await api('/sales/last-invoice-number');
+
+        return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
@@ -98,6 +111,17 @@ export async function filterSaleByTermAPI<
         if (result.success) {
             return result.data;
         }
+    } catch (error) {
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+    }
+}
+
+export async function createSaleAPI(sale: RegisterSaleAPI) {
+    try {
+        const { data } = await api.post('/sales', sale);
+        return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
             throw new Error(error.response.data.error);
