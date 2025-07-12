@@ -61,8 +61,8 @@ export default function ChangePasswordForm({
                 className="flex gap-3 flex-col "
             >
                 <div className="flex flex-col gap-2 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
-                    <label htmlFor="password" className="w-24  font-semibold">
-                        Contraseña:
+                    <label htmlFor="password" className=" font-semibold">
+                        Contraseña
                     </label>
                     <div className="flex flex-col w-full">
                         <input
@@ -84,11 +84,8 @@ export default function ChangePasswordForm({
                     </div>
                 </div>
                 <div className="flex flex-col gap-1 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
-                    <label
-                        htmlFor="newPassword"
-                        className="w-24  font-semibold"
-                    >
-                        Nueva Contraseña:
+                    <label htmlFor="newPassword" className="font-semibold">
+                        Nueva Contraseña
                     </label>
                     <div className="flex flex-col w-full">
                         <input
@@ -115,11 +112,8 @@ export default function ChangePasswordForm({
                     </div>
                 </div>
                 <div className="flex flex-col gap-1 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
-                    <label
-                        htmlFor="repeatPassword"
-                        className="w-24  font-semibold"
-                    >
-                        Repite la nueva Contraseña:
+                    <label htmlFor="repeatPassword" className=" font-semibold">
+                        Repite la nueva Contraseña
                     </label>
                     <div className="flex flex-col w-full">
                         <input
