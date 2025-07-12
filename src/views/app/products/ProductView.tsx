@@ -61,7 +61,7 @@ export default function ProductView() {
             <>
                 <PageTitle title="Productos" />
                 <div className="bg-white p-5 rounded-b-lg shadow-lg">
-                    <div className="grid  grid-cols-1 md:grid-cols-2 ">
+                    <div className="flex flex-col gap-3 md:flex-row items-center  justify-around mt-3">
                         <div className="flex items-center">
                             {/* register user */}
                             <button
@@ -82,8 +82,7 @@ export default function ProductView() {
                                 </BasicModal>
                             )}
                         </div>
-
-                        <div className="flex flex-col gap-3 lg:flex-row items-center  justify-around mt-3">
+                        <div className="flex items-center">
                             {categories.data && (
                                 <AutoCompleteSearch
                                     options={categories.data.map(
@@ -97,16 +96,16 @@ export default function ProductView() {
                                     title="Categoría"
                                 />
                             )}
-                            <InputSearch
-                                value={[
-                                    'detailsProducts.products.name',
-                                    'detailsProducts.products.code',
-                                ]}
-                                placeholder="Ingresa tu búsqueda por código o nombre"
-                                dataCache="products"
-                                setFilteredResults={setFilteredResultsByTerm}
-                            />
                         </div>
+                        <InputSearch
+                            value={[
+                                'detailsProducts.products.name',
+                                'detailsProducts.products.code',
+                            ]}
+                            placeholder="Ingresa tu búsqueda por código o nombre"
+                            dataCache="products"
+                            setFilteredResults={setFilteredResultsByTerm}
+                        />
                     </div>
 
                     <div className="flex flex-col gap-5 sm:flex-row md:gap-0 justify-between items-center mb-8"></div>
