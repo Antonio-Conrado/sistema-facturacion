@@ -34,7 +34,7 @@ export default function FormPurchases({
 
     const {
         handleSubmit,
-        formState: { errors, isValid },
+        formState: { errors },
         register,
         control,
         watch,
@@ -176,7 +176,6 @@ export default function FormPurchases({
                             type="submit"
                             value={'Registrar Compra'}
                             className="btn-confirm disabled:opacity-50 disabled:cursor-not-allowed"
-                            disabled={!isValid}
                         />
                     </div>
                 </form>

@@ -76,7 +76,7 @@ export default function ProductForm({
                                     />
                                 )}
                             </div>
-                            <div className="basis-[5%]">
+                            <div className="basis-[5%] ">
                                 <Add
                                     onClick={() =>
                                         addedFromModal(true, 'categories')
@@ -119,9 +119,9 @@ export default function ProductForm({
                     )}
                 </div>
 
-                <div className="my-3 flex flex-col gap-1 md:flex-row md:gap-3 text-gray-800">
+                <div className="my-3 flex flex-col gap-1 md:gap-3 text-gray-800">
                     <label htmlFor="description" className="w-20 font-semibold">
-                        Descripción:
+                        Descripción
                     </label>
                     <Controller
                         name="description"
@@ -133,6 +133,7 @@ export default function ProductForm({
                                 readOnly={isReadOnly}
                                 className="border rounded-lg w-full px-2 min-h-fit"
                                 value={field.value ?? ''}
+                                rows={5}
                             />
                         )}
                     />
@@ -145,7 +146,7 @@ export default function ProductForm({
                             value={
                                 action === ModalAction.Edit
                                     ? 'Guardar cambios'
-                                    : 'Crear categoría'
+                                    : 'Crear producto'
                             }
                             className="btn-confirm"
                         />
