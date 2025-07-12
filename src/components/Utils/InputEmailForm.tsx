@@ -8,7 +8,7 @@ import {
 
 type InputEmailsFormProps<T extends FieldValues> = {
     isReadOnly: boolean;
-    requiredMsg?: string
+    requiredMsg?: string;
     errors: FieldErrors<T>;
     register: UseFormRegister<T>;
 };
@@ -21,11 +21,11 @@ export default function InputEmailsForm<T extends FieldValues>({
 }: InputEmailsFormProps<T>) {
     return (
         <>
-            <div className="flex flex-col gap-1 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
+            <div className="flex flex-col gap-1 items-start md:gap-3 text-gray-800">
                 <label htmlFor="email" className="w-24 font-semibold">
-                    Email:
+                    Email
                 </label>
-                <div className="flex flex-col w-full">
+                <div className=" flex-col w-full">
                     <input
                         id="email"
                         type="email"

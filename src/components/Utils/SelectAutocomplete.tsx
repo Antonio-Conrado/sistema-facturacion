@@ -26,7 +26,7 @@ export default function SelectAutocomplete<T extends FieldValues>({
 }: SelectAutocompleteProps<T>) {
     return (
         <div className="flex flex-col gap-1  items-start  md:gap-3 text-gray-800">
-            <label htmlFor={name} className="w-24 font-semibold">
+            <label htmlFor={name} className="font-semibold">
                 {title}
             </label>
             <div className="flex flex-col w-full">
