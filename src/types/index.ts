@@ -91,6 +91,17 @@ export const SuppliersSchema = z.array(SupplierSchema);
 export type Supplier = z.infer<typeof SupplierSchema>;
 export type Suppliers = z.infer<typeof SuppliersSchema>;
 
+//bank
+export const BankSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    status: z.boolean(),
+});
+
+export const BanksSchema = z.array(BankSchema);
+export type Bank = z.infer<typeof BankSchema>;
+export type Banks = z.infer<typeof BanksSchema>;
+
 //product
 export const ProductSchema = z.object({
     id: z.number(),
@@ -358,6 +369,7 @@ export type DataType = 'date' | 'status' | 'currency' | 'text';
 export enum SearchFilterEnum {
     suppliersId = 'suppliersId',
     invoiceNumber = 'invoiceNumber',
+    banksId = 'banksId',
     usersId = 'usersId',
     ivaId = 'ivaId',
     productId = 'productId',
@@ -366,6 +378,7 @@ export enum SearchFilterEnum {
 
 export type SearchFilterValues = {
     [SearchFilterEnum.suppliersId]: number | null;
+    [SearchFilterEnum.banksId]: number | null;
     [SearchFilterEnum.invoiceNumber]: string | null;
     [SearchFilterEnum.usersId]: number | null;
     [SearchFilterEnum.ivaId]: number | null;

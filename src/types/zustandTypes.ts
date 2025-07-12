@@ -6,6 +6,7 @@ export enum ModalKeyList {
 
 export type ModalKey =
     | 'suppliers'
+    | 'banks'
     | 'products'
     | 'categories'
     | 'purchaseInvoice'
@@ -55,4 +56,40 @@ export type PurchasesSlice = {
     removeProductFromPurchase: (id: number) => void;
     resetPurchase: () => void;
     saveFinalizedPurchaseId: (purchaseId: number) => void;
+};
+
+//*sales*/
+
+export type RegisterSaleDetailsTransaction = Omit<
+    RegisterDetailsTransaction,
+    'purchasePrice' | 'salePrice'
+> & {
+    price: number;
+};
+
+export type RegisterSaleForm = {
+    usersId: number;
+    paymentMethodId: number;
+    invoiceNumber: number;
+    transactionReference: string;
+    banksId: number;
+    date: string;
+    iva: number;
+    detailsSales: RegisterSaleDetailsTransaction[];
+    subtotal: number;
+    discount: number;
+    total: number;
+};
+
+export type RegisterSaleAPI = Omit<RegisterSaleForm, 'date'> & {
+    date: Date;
+};
+
+export type SalesSlice = {
+    sale: RegisterSaleForm;
+    finalizedSaleId: number;
+    addSale: (purchase: RegisterSaleForm) => void;
+    removeProductFromSale: (id: number) => void;
+    resetSale: () => void;
+    saveFinalizedSaleId: (saleId: number) => void;
 };
