@@ -1,4 +1,4 @@
-import { RegisterPurchaseForm } from '@/types/zustandTypes';
+import { RegisterPurchaseForm, RegisterSaleForm } from '@/types/zustandTypes';
 import { IvaList, LinksSideBar } from '../types';
 
 import {
@@ -10,6 +10,7 @@ import {
     Settings,
     Store,
     AccountCircle,
+    AccountBalance,
 } from '@mui/icons-material';
 
 export enum Role {
@@ -88,6 +89,12 @@ export const links: LinksSideBar[] = [
                 icon: GridView,
                 rol: [Role.admin, Role.employee],
             },
+            {
+                name: 'Bancos',
+                path: '/catalogos/bancos',
+                icon: AccountBalance,
+                rol: [Role.admin, Role.employee],
+            },
         ],
     },
     {
@@ -137,6 +144,20 @@ export const initialPurchase: RegisterPurchaseForm = {
     date: new Date().toISOString().split('T')[0],
     iva: 0,
     detailsPurchases: [],
+    subtotal: 0,
+    discount: 0,
+    total: 0,
+};
+
+export const initialSale: RegisterSaleForm = {
+    usersId: 0,
+    paymentMethodId: 0,
+    banksId: 0,
+    invoiceNumber: 0,
+    transactionReference: '',
+    date: new Date().toISOString().split('T')[0],
+    iva: 0,
+    detailsSales: [],
     subtotal: 0,
     discount: 0,
     total: 0,

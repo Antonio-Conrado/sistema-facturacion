@@ -29,6 +29,8 @@ export const listSuppliersHead = [
     'Acciones',
 ];
 
+export const listBankHead = ['Id', 'Nombre', 'Estado', 'Acciones'];
+
 //product
 export const listProductHead = [
     'Id',
