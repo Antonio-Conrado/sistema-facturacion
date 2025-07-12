@@ -43,9 +43,9 @@ export default function SelectSupplier<T extends FieldValues>({
     };
 
     return (
-        <div className="flex flex-col gap-1 md:flex-row items-start md:items-center md:gap-3 text-gray-800">
-            <label htmlFor="supplier" className="w-24  font-semibold">
-                Seleccionar Proveedor:
+        <div className="flex flex-col gap-1  items-start  md:gap-3 text-gray-800">
+            <label htmlFor="supplier" className="font-semibold">
+                Seleccionar Proveedor
             </label>
             <div className="flex w-full items-center gap-2">
                 <Controller
@@ -58,10 +58,12 @@ export default function SelectSupplier<T extends FieldValues>({
                     }}
                     render={({ field }) => (
                         <AutoCompleteSearch
-                            options={suppliers.map((supplier) => ({
-                                value: supplier.id,
-                                label: supplier.name,
-                            }))}
+                            options={suppliers
+                                .filter((supplier) => supplier.status === true)
+                                .map((supplier) => ({
+                                    value: supplier.id,
+                                    label: supplier.name,
+                                }))}
                             value={
                                 purchase.suppliersId
                                     ? purchase.suppliersId
@@ -76,14 +78,14 @@ export default function SelectSupplier<T extends FieldValues>({
                         />
                     )}
                 />
-                {errors.suppliersId?.message && (
-                    <p className="text-red-500">
-                        {String(errors.suppliersId.message)}
-                    </p>
-                )}
 
                 <Add onClick={() => addedFromModal(true, 'suppliers')} />
             </div>
+            {errors.suppliersId?.message && (
+                <p className="text-red-500">
+                    {String(errors.suppliersId.message)}
+                </p>
+            )}
         </div>
     );
 }
