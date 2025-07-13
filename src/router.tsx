@@ -19,7 +19,6 @@ import ResetPasswordViews from './views/auth/ResetPassword';
 import ConfirmAccountViews from './views/auth/ConfirmAccountViews';
 // views App
 import DashboardViews from './views/app/DashboardViews';
-import SalesViews from './views/app/sales/SalesViews';
 import BusinessDataView from './views/app/businessData/BusinessDataView';
 import UserView from './views/app/businessData/UserView';
 import SecurityView from './views/app/Security/SecurityView';
@@ -32,6 +31,8 @@ import { Role } from './data';
 import RegisterPurchaseView from './views/app/purchases/RegisterPurchaseView';
 import SaleHistoryView from './views/app/sales/SaleHistoryView';
 import SaleDetailView from './views/app/sales/SaleView';
+import RegisterSaleView from './views/app/sales/RegisterSaleView';
+import BankView from './views/app/catalogs/BankView';
 
 export default function Router() {
     return (
@@ -79,7 +80,7 @@ export default function Router() {
                                     <ValidateRole
                                         roles={[Role.admin, Role.employee]}
                                     >
-                                        <SalesViews />
+                                        <RegisterSaleView />
                                     </ValidateRole>
                                 }
                             />
@@ -171,7 +172,16 @@ export default function Router() {
                                     </ValidateRole>
                                 }
                             />
-
+                            <Route
+                                path="/catalogos/bancos"
+                                element={
+                                    <ValidateRole
+                                        roles={[Role.admin, Role.employee]}
+                                    >
+                                        <BankView />
+                                    </ValidateRole>
+                                }
+                            />
                             {/* Security */}
                             <Route
                                 path="/seguridad"
