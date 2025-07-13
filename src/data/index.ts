@@ -12,6 +12,7 @@ import {
     AccountCircle,
     AccountBalance,
 } from '@mui/icons-material';
+import { getLocalDateString } from '@/utils/validateDate';
 
 export enum Role {
     admin = 'administrador',
@@ -141,7 +142,7 @@ export const initialPurchase: RegisterPurchaseForm = {
     usersId: 0,
     suppliersId: 0,
     invoiceNumber: 0,
-    date: new Date().toISOString().split('T')[0],
+    date: getLocalDateString(),
     iva: 0,
     detailsPurchases: [],
     subtotal: 0,
@@ -155,7 +156,7 @@ export const initialSale: RegisterSaleForm = {
     banksId: 0,
     invoiceNumber: 0,
     transactionReference: '',
-    date: new Date().toISOString().split('T')[0],
+    date: getLocalDateString(),
     iva: 0,
     detailsSales: [],
     subtotal: 0,

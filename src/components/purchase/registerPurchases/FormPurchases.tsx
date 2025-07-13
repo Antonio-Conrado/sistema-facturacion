@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { StoredProducts, Suppliers } from '@/types/index';
 import Input from '@/components/Utils/Input';
-import validateDate from '@/utils/validateDate';
+import validateDate, { getLocalDateString } from '@/utils/validateDate';
 import usePurchase from '@/hooks/purchase/usePurchase';
 import TransactionProductSelector from '@/components/products/TransactionProductSelector';
 import SelectIva from '@/components/iva/SelectIva';
@@ -76,7 +76,7 @@ export default function FormPurchases({
                             name="date"
                             type="date"
                             msg="La fecha debe ser válida"
-                            max={new Date().toISOString().split('T')[0]}
+                            max={getLocalDateString()}
                             isReadOnly={false}
                             errors={errors}
                             register={register}
