@@ -18,6 +18,7 @@ export default function SuspendSale({ sale, onClose }: SuspendSaleProps) {
         handleSubmit,
         register,
         formState: { errors },
+        reset,
     } = useForm({
         defaultValues: {
             cancellationReason: '',
@@ -32,6 +33,7 @@ export default function SuspendSale({ sale, onClose }: SuspendSaleProps) {
         onSuccess: (data) => {
             if (data) toast.success(data);
             queryClient.invalidateQueries({ queryKey: ['sales'] });
+            reset();
             onClose();
         },
     });
