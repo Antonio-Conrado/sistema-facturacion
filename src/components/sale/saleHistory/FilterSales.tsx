@@ -56,25 +56,30 @@ export default function FilterSales({
     return (
         <div className="grid grid-cols-1 md:grid-cols-[40%_60%] gap-3 md:gap-0 mt-3 mb-5">
             <div className="flex flex-col md:flex-row items-center gap-3">
-                <AutoCompleteSearch
-                    options={paymentMethods.map((paymentMethod) => ({
-                        value: paymentMethod.id,
-                        label: paymentMethod.name,
-                    }))}
-                    value={filters.paymentMethodId ?? null}
-                    onChange={handlePaymentMethodChange}
-                    title="Métodos de pagos"
-                />
+                <div className="flex items-center">
+                    <AutoCompleteSearch
+                        options={paymentMethods.map((paymentMethod) => ({
+                            value: paymentMethod.id,
+                            label: paymentMethod.name,
+                        }))}
+                        value={filters.paymentMethodId ?? null}
+                        onChange={handlePaymentMethodChange}
+                        title="Métodos de pagos"
+                    />
+                </div>
 
-                <AutoCompleteSearch
-                    options={users.map((user) => ({
-                        value: user.id,
-                        label: `${user.name} ${user.surname}`,
-                    }))}
-                    value={filters.usersId ?? null}
-                    onChange={handleUserChange}
-                    title="Usuarios"
-                />
+                <div className="flex items-center">
+                    {' '}
+                    <AutoCompleteSearch
+                        options={users.map((user) => ({
+                            value: user.id,
+                            label: `${user.name} ${user.surname}`,
+                        }))}
+                        value={filters.usersId ?? null}
+                        onChange={handleUserChange}
+                        title="Usuarios"
+                    />
+                </div>
             </div>
 
             <div className="flex flex-col items-center md:items-end">
