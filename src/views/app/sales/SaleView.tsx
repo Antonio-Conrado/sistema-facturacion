@@ -8,10 +8,17 @@ import DataNotFound from '@/components/Utils/DataNotFound';
 import PageTitle from '@/components/Utils/PageTitle';
 import Spinner from '@/components/Utils/Spinner';
 import { getPaymentMethodsApi } from '@/api/paymentMethods/paymentMethods';
+import { useAppStore } from '@/store/useAppStore';
+import InvoiceModal from '@/components/Utils/InvoiceModal';
+import { ModalKeyList } from '@/types/zustandTypes';
 
 export default function SaleDetailView() {
     const params = useParams();
     const id = +params.id!;
+
+    const isActiveModal = useAppStore((store) => store.isActiveModal);
+    const activeModalKey = useAppStore((store) => store.activeModalKey);
+    const finalizedSaleId = useAppStore((store) => store.finalizedSaleId);
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ['sale', id],
@@ -40,6 +47,14 @@ export default function SaleDetailView() {
 
                     <SaleTotalDetails sale={data} />
                 </div>
+
+                {isActiveModal && activeModalKey === 'saleInvoice' && (
+                    <InvoiceModal
+                        id={finalizedSaleId}
+                        title="¿Desea imprimir la factura?"
+                        modalType={ModalKeyList.SaleInvoice}
+                    />
+                )}
             </>
         );
 }
