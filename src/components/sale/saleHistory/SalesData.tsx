@@ -9,11 +9,9 @@ import BasicTable from '../../Utils/BasicTable';
 import { listSalesHistoryHead } from '@/data/tableHeadData';
 import NoDataMessage from '../../Utils/NoDataMessage';
 import { TableCell, TableRow } from '@mui/material';
-import { Block, Description, Info, NoteAdd } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
-import { ModalAction, PaymentMethodsLabel, Role } from '@/data/index';
+import { ModalAction } from '@/data/index';
 import BasicModal from '../../Utils/BasicModal';
-import { Link, useLocation } from 'react-router-dom';
 import InputFileUpload from '@/components/Utils/InputFileUpload';
 import useAuth from '@/hooks/useAuth';
 import { getUser } from '@/api/user/user';
@@ -24,6 +22,10 @@ import {
 } from '@/api/sale/sale';
 import TableBodyCellSales from './TableBodyCellSale';
 import SuspendSale from './SuspendSale';
+import SalesRowActions from './SalesRowActions';
+import { useAppStore } from '@/store/useAppStore';
+import InvoiceModal from '@/components/Utils/InvoiceModal';
+import { ModalKeyList } from '@/types/zustandTypes';
 
 type SalesDataProps = {
     data: SalesHistory['sales'];
@@ -38,8 +40,12 @@ export default function SalesData({
     isFiltered,
     filteredSalesByTerm,
 }: SalesDataProps) {
-    const location = useLocation();
     const { userAuth } = useAuth();
+
+    const isActiveModal = useAppStore((store) => store.isActiveModal);
+    const activeModalKey = useAppStore((store) => store.activeModalKey);
+    const finalizedSaleId = useAppStore((store) => store.finalizedSaleId);
+
     const { data: user } = useQuery({
         queryKey: ['user'],
         queryFn: () => getUser({ id: userAuth.id }),
@@ -57,7 +63,7 @@ export default function SalesData({
     const handleOpenModal = (action: ModalAction, id: number) => {
         setOpenModal(true);
         setModalContent(action);
-        const sale = data.find((sale) => sale.id === id);
+        const sale = tableData.find((sale) => sale.id === id);
         if (!sale) {
             toast.error(
                 'Hubo un error! Intenta nuevamente o actualiza la página',
@@ -100,105 +106,81 @@ export default function SalesData({
         }
     }, [isFiltered]);
 
-    return (
-        <>
-            <BasicTable
-                rows={tableData}
-                listHead={listSalesHistoryHead}
-                page={page}
-                rowsPerPage={rowsPerPage}
-                setPage={setPage}
-                setRowsPerPage={setRowsPerPage}
-                total={total}
-            >
-                {/* validata if data */}
-                {tableData.length === 0 && (
-                    <NoDataMessage
-                        msg="ventas"
-                        cols={listSalesHistoryHead.length}
-                    />
-                )}
-
-                {tableData.map((row) => (
-                    <TableRow
-                        key={row.id}
-                        sx={{
-                            '&:last-child td, &:last-child th': {
-                                border: 0,
-                            },
-                        }}
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                    >
-                        <TableBodyCellSales row={row} />
-                        <TableCell align="center" className="space-x-1 ">
-                            <Link to={`${location.pathname}/${row.id}`}>
-                                {' '}
-                                <Info className="text-cyan-800  hover:text-cyan-700 cursor-pointer" />
-                            </Link>
-
-                            {row.paymentMethods.name ===
-                                PaymentMethodsLabel.bankTransfer && (
-                                <NoteAdd
-                                    className="text-amber-800 hover:text-amber-700 cursor-pointer"
-                                    onClick={() =>
-                                        handleOpenModal(ModalAction.Add, row.id)
-                                    }
-                                />
-                            )}
-
-                            {row.document && (
-                                <>
-                                    <Link
-                                        to={row.document}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <Description className="text-teal-800 hover:text-teal-700 cursor-pointer" />
-                                    </Link>
-                                </>
-                            )}
-
-                            {user?.roles?.name === Role.admin && row.status && (
-                                <Block
-                                    className="text-red-800 hover:text-red-700 cursor-pointer"
-                                    onClick={() =>
-                                        handleOpenModal(
-                                            ModalAction.Suspend,
-                                            row.id,
-                                        )
-                                    }
-                                />
-                            )}
-                        </TableCell>
-                    </TableRow>
-                ))}
-            </BasicTable>
-
-            {/* Open a modal when a security action has been executed */}
-            <BasicModal
-                openModal={openModal}
-                onClose={() => setOpenModal(false)}
-            >
-                {modalContent === ModalAction.Add && sale && (
-                    <div className="flex justify-center w-full mx-auto">
-                        <InputFileUpload
-                            text="Subir comprobante de transferencia"
-                            infoCache="sales"
-                            mutationFn={uploadSaleInvoiceAPI}
-                            id={sale.id}
-                            width="w-full"
+    if (user)
+        return (
+            <>
+                <BasicTable
+                    rows={tableData}
+                    listHead={listSalesHistoryHead}
+                    page={page}
+                    rowsPerPage={rowsPerPage}
+                    setPage={setPage}
+                    setRowsPerPage={setRowsPerPage}
+                    total={total}
+                >
+                    {/* validata if data */}
+                    {tableData.length === 0 && (
+                        <NoDataMessage
+                            msg="ventas"
+                            cols={listSalesHistoryHead.length}
                         />
-                    </div>
-                )}
-                {modalContent === ModalAction.Suspend && sale && (
-                    <SuspendSale
-                        sale={sale}
-                        onClose={() => setOpenModal(false)}
+                    )}
+
+                    {tableData.map((row) => (
+                        <TableRow
+                            key={row.id}
+                            sx={{
+                                '&:last-child td, &:last-child th': {
+                                    border: 0,
+                                },
+                            }}
+                            hover
+                            role="checkbox"
+                            tabIndex={-1}
+                        >
+                            <TableBodyCellSales row={row} />
+                            <TableCell align="center" className="space-x-1 ">
+                                <SalesRowActions
+                                    row={row}
+                                    user={user}
+                                    handleOpenModal={handleOpenModal}
+                                />
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </BasicTable>
+
+                {/* Open a modal when a security action has been executed */}
+                <BasicModal
+                    openModal={openModal}
+                    onClose={() => setOpenModal(false)}
+                >
+                    {modalContent === ModalAction.Add && sale && (
+                        <div className="flex justify-center w-full mx-auto">
+                            <InputFileUpload
+                                text="Subir comprobante de transferencia"
+                                infoCache="sales"
+                                mutationFn={uploadSaleInvoiceAPI}
+                                id={sale.id}
+                                width="w-full"
+                            />
+                        </div>
+                    )}
+                    {modalContent === ModalAction.Suspend && sale && (
+                        <SuspendSale
+                            sale={sale}
+                            onClose={() => setOpenModal(false)}
+                        />
+                    )}
+                </BasicModal>
+
+                {isActiveModal && activeModalKey === 'saleInvoice' && (
+                    <InvoiceModal
+                        id={finalizedSaleId}
+                        title="¿Desea imprimir la factura?"
+                        modalType={ModalKeyList.SaleInvoice}
                     />
                 )}
-            </BasicModal>
-        </>
-    );
+            </>
+        );
 }
