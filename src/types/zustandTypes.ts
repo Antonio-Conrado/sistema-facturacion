@@ -11,6 +11,7 @@ export type ModalKey =
     | 'categories'
     | 'purchaseInvoice'
     | 'saleInvoice'
+    | 'uploadBankInvoiceReference'
     | 'default';
 
 export type GeneralSlice = {
@@ -72,7 +73,7 @@ export type RegisterSaleForm = {
     paymentMethodId: number;
     invoiceNumber: number;
     transactionReference: string;
-    banksId: number;
+    bankId: number;
     date: string;
     iva: number;
     detailsSales: RegisterSaleDetailsTransaction[];

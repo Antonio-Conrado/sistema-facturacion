@@ -369,7 +369,7 @@ export type DataType = 'date' | 'status' | 'currency' | 'text';
 export enum SearchFilterEnum {
     suppliersId = 'suppliersId',
     invoiceNumber = 'invoiceNumber',
-    banksId = 'banksId',
+    bankId = 'bankId',
     usersId = 'usersId',
     ivaId = 'ivaId',
     productId = 'productId',
@@ -378,7 +378,7 @@ export enum SearchFilterEnum {
 
 export type SearchFilterValues = {
     [SearchFilterEnum.suppliersId]: number | null;
-    [SearchFilterEnum.banksId]: number | null;
+    [SearchFilterEnum.bankId]: number | null;
     [SearchFilterEnum.invoiceNumber]: string | null;
     [SearchFilterEnum.usersId]: number | null;
     [SearchFilterEnum.ivaId]: number | null;
