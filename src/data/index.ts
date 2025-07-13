@@ -153,7 +153,7 @@ export const initialPurchase: RegisterPurchaseForm = {
 export const initialSale: RegisterSaleForm = {
     usersId: 0,
     paymentMethodId: 0,
-    banksId: 0,
+    bankId: 0,
     invoiceNumber: 0,
     transactionReference: '',
     date: getLocalDateString(),
