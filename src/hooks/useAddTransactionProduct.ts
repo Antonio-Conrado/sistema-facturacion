@@ -6,21 +6,23 @@ import { calculateSubtotalOfDetails } from '@/utils/calculateSubtotalOfDetails';
 import { StoredProduct } from '../types';
 import {
     RegisterDetailsTransaction,
-    RegisterPurchaseForm,
+    RegisterSaleDetailsTransaction,
 } from '@/types/zustandTypes';
-import { UseFormSetValue } from 'react-hook-form';
+import { FieldValues, Path, PathValue, UseFormSetValue } from 'react-hook-form';
 
-type UseTransactionProps = {
+type UseTransactionProps<T extends FieldValues> = {
     transactionType: 'PURCHASES' | 'SALES';
-    setValue: UseFormSetValue<RegisterPurchaseForm>;
+    setValue: UseFormSetValue<T>;
 };
 
-export default function useAddTransactionProduct({
+export default function useAddTransactionProduct<T extends FieldValues>({
     transactionType,
     setValue,
-}: UseTransactionProps) {
+}: UseTransactionProps<T>) {
     const addPurchase = useAppStore((store) => store.addPurchase);
     const purchase = useAppStore((store) => store.purchase);
+    const addSale = useAppStore((store) => store.addSale);
+    const sale = useAppStore((store) => store.sale);
 
     const product = useQuery({
         queryKey: ['products'],
@@ -32,12 +34,12 @@ export default function useAddTransactionProduct({
             const transaction =
                 transactionType === 'PURCHASES'
                     ? purchase.detailsPurchases
-                    : [];
+                    : sale.detailsSales;
             return transaction.some(
                 (item) => item.storedProductsId === productId,
             );
         },
-        [purchase.detailsPurchases, transactionType],
+        [purchase.detailsPurchases, sale.detailsSales, transactionType],
     );
 
     const handleAddProductById = (id: number) => {
@@ -81,23 +83,55 @@ export default function useAddTransactionProduct({
             });
 
             setValue(
-                `detailsPurchases.${newDetail.storedProductsId}.purchasePrice`,
-                newDetail.purchasePrice,
+                `detailsPurchases.${newDetail.storedProductsId}.purchasePrice` as Path<T>,
+                newDetail.purchasePrice as PathValue<T, Path<T>>,
             );
             setValue(
-                `detailsPurchases.${newDetail.storedProductsId}.salePrice`,
-                newDetail.salePrice,
+                `detailsPurchases.${newDetail.storedProductsId}.salePrice` as Path<T>,
+                newDetail.salePrice as PathValue<T, Path<T>>,
             );
             setValue(
-                `detailsPurchases.${newDetail.storedProductsId}.amount`,
-                newDetail.amount,
+                `detailsPurchases.${newDetail.storedProductsId}.amount` as Path<T>,
+                newDetail.amount as PathValue<T, Path<T>>,
             );
             setValue(
-                `detailsPurchases.${newDetail.storedProductsId}.discount`,
-                newDetail.discount,
+                `detailsPurchases.${newDetail.storedProductsId}.discount` as Path<T>,
+                newDetail.discount as PathValue<T, Path<T>>,
             );
         } else {
-            console.log('sales');
+            const newDetail: RegisterSaleDetailsTransaction = {
+                storedProductsId: filteredProduct.id,
+                code: filteredProduct.detailsProducts.products.code,
+                name: filteredProduct.detailsProducts.products.name,
+                image: filteredProduct.detailsProducts.image ?? '',
+                amount: 1,
+                discount: 0,
+                subtotal: calculateSubtotalOfDetails({
+                    salePrice: filteredProduct.salePrice,
+                    amount: 1,
+                    discount: 0,
+                    type: 'SALE',
+                }),
+                price: filteredProduct.salePrice ?? 0,
+            };
+            addSale({
+                ...sale,
+                detailsSales: [...sale.detailsSales, newDetail],
+            });
+
+            setValue(
+                `detailsSales.${newDetail.storedProductsId}.price` as Path<T>,
+                newDetail.price as PathValue<T, Path<T>>,
+            );
+
+            setValue(
+                `detailsSales.${newDetail.storedProductsId}.amount` as Path<T>,
+                newDetail.amount as PathValue<T, Path<T>>,
+            );
+            setValue(
+                `detailsSales.${newDetail.storedProductsId}.discount` as Path<T>,
+                newDetail.discount as PathValue<T, Path<T>>,
+            );
         }
     };
 
