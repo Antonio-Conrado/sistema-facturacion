@@ -50,7 +50,7 @@ export default function InputFileUpload({
         onSuccess: (data) => {
             if (data) toast.success(data);
             queryClient.invalidateQueries({
-                queryKey: id ? [infoCache, id] : [infoCache],
+                queryKey: [infoCache],
             });
         },
     });
