@@ -87,7 +87,7 @@ export default function SelectIva<T extends FieldValues>({
                         )}
                     />
                     {errors.iva?.message && (
-                        <p className="text-red-500">
+                        <p className="text-red-500 mt-2">
                             {String(errors.iva.message)}
                         </p>
                     )}
