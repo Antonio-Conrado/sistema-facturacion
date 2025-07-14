@@ -39,6 +39,11 @@ export default function RegisterSaleView() {
         queryFn: getProductsApi,
     });
 
+    const handleCloseUploadInvoiceModal = () => {
+        addedFromModal(false, ModalKeyList.SaleInvoice);
+        addedFromModal(true, ModalKeyList.SaleInvoice);
+    };
+
     const queries = [paymentMethods, products, lastInvoiceNumber, banks];
 
     if (queries.some((query) => query.isLoading)) return <Spinner />;
@@ -81,12 +86,7 @@ export default function RegisterSaleView() {
                                 </DialogTitle>
                                 <Close
                                     className="absolute right-4 top-2 text-slate-700 border-orange-800 cursor-pointer"
-                                    onClick={() =>
-                                        addedFromModal(
-                                            false,
-                                            ModalKeyList.SaleInvoice,
-                                        )
-                                    }
+                                    onClick={handleCloseUploadInvoiceModal}
                                 />
                             </div>
                             <DialogContent className="flex justify-around my-5">

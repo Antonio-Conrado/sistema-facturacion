@@ -7,7 +7,6 @@ import useAuth from '../useAuth';
 import useToast from '../useNotifications';
 import { initialSale } from '@/data/index';
 import { createSaleAPI } from '@/api/sale/sale';
-import { ModalKeyList } from '@/types/zustandTypes';
 
 export default function useSale() {
     const addedFromModal = useAppStore((store) => store.addedFromModal);
@@ -57,7 +56,6 @@ export default function useSale() {
             }
             bankId = 0;
 
-            addedFromModal(true, ModalKeyList.SaleInvoice);
             queryClient.invalidateQueries({ queryKey: ['products'] });
             queryClient.invalidateQueries({ queryKey: ['invoiceNumber'] });
         },
