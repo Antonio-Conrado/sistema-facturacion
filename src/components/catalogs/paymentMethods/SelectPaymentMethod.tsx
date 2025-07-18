@@ -36,6 +36,7 @@ export default function SelectPaymentMethod<T extends FieldValues>({
 
         addSale({
             ...sale,
+            bankId: paymentMethodId === 2 ? sale.bankId : 0,
             paymentMethodId: paymentMethodId ? paymentMethodId : 0,
         });
     };

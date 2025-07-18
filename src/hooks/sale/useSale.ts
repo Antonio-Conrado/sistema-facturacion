@@ -53,6 +53,8 @@ export default function useSale() {
             if (bankId) {
                 //upload invoice
                 addedFromModal(true, 'uploadBankInvoiceReference');
+            } else {
+                addedFromModal(true, 'saleInvoice');
             }
             bankId = 0;
 
