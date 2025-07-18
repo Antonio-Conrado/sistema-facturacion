@@ -179,8 +179,15 @@ export default function FormSales({
                             errors={errors}
                             register={register}
                             validate={{
-                                validate: () =>
-                                    validateNumber(sale.discount, 'descuento'),
+                                validate: (value) => {
+                                    if (+value <= 0 || +value >= 50) {
+                                        return 'El descuento debe estar en el rango de 0% - 50%';
+                                    }
+                                    return validateNumber(
+                                        sale.discount,
+                                        'descuento',
+                                    );
+                                },
                             }}
                         />
 

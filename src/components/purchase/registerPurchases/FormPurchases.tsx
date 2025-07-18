@@ -136,17 +136,21 @@ export default function FormPurchases({
                             name="discount"
                             type="number"
                             msg="El descuento debe ser válido"
-                            max="100"
+                            max="50"
                             isPercentage={true}
                             isReadOnly={false}
                             errors={errors}
                             register={register}
                             validate={{
-                                validate: () =>
-                                    validateNumber(
+                                validate: (value) => {
+                                    if (+value <= 0 || +value >= 50) {
+                                        return 'El descuento debe estar en el rango de 0% - 50%';
+                                    }
+                                    return validateNumber(
                                         purchase.discount,
                                         'descuento',
-                                    ),
+                                    );
+                                },
                             }}
                         />
 

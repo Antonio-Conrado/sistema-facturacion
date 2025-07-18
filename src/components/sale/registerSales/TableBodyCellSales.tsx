@@ -103,8 +103,8 @@ export default function TableBodyCellSales({
                     rules={{
                         required: 'El descuento es obligatorio',
                         validate: (value) =>
-                            (+value >= 0 && +value <= 100) ||
-                            'Debe estar entre 0% y 100%',
+                            (+value >= 0 && +value <= 50) ||
+                            'Debe estar entre 0% y 50%',
                     }}
                     min={0}
                     max={100}
