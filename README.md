@@ -19,19 +19,31 @@ https://github.com/Antonio-Conrado/Sistema-de-Facturacion-Backend
 1. Clone this repository:
 
     ```bash
-    git clone https://github.com/Antonio-Conrado/Sistema-de-Facturacion-Frontend.git
+    git clone https://github.com/Antonio-Conrado/sistema-facturacion.git
     ```
 
-2. Navigate to the project folder
+2. Navigate to the project folder:
 
-3. Install dependencies:
+    ```bash
+    cd sistema-facturacion
+    ```
+
+3. Create a `.env` file in the root directory and copy the contents from `.env.template`, replacing the values with your own:
+
+    ```bash
+    cp .env.template .env
+    ```
+
+4. Install the dependencies:
 
     ```bash
     npm i
     ```
 
-4. Start the development server:
+5. Start the development server:
 
     ```bash
     npm run dev
     ```
+
+---
