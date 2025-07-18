@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 //context
 import AuthProvider from './context/AuthContext';
@@ -63,9 +63,18 @@ export default function Router() {
 
                         {/* APP */}
                         <Route path="/" element={<AppLayouts />}>
-                            {/* dashboard views */}
                             <Route
                                 index
+                                element={
+                                    <ValidateRole roles={[Role.admin]}>
+                                        <Navigate to="/ventas" replace />
+                                    </ValidateRole>
+                                }
+                            />
+
+                            {/* dashboard views */}
+                            <Route
+                                path="/dashboard"
                                 element={
                                     <ValidateRole roles={[Role.admin]}>
                                         <DashboardViews />

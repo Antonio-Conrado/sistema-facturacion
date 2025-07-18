@@ -16,3 +16,9 @@ export function getLocalDateString() {
     const day = String(now.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
 }
+
+export function getTodayMidnightISOString(): string {
+    const now = new Date();
+    now.setUTCHours(0, 0, 0, 0);
+    return now.toISOString();
+}

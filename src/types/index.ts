@@ -342,6 +342,45 @@ export type PaymentMethods = z.infer<typeof PaymentMethodsSchema>;
 export type IvaList = {
     value: number;
 }[];
+
+// dashboard
+
+const lastTransactionSchema = z.object({
+    id: z.number(),
+    date: z.string().datetime(),
+    invoiceNumber: z.number(),
+    total: z.number(),
+});
+
+const DayTotalSchema = z.object({
+    day: z.string().datetime(),
+    total: z.number(),
+});
+
+const MonthTotalSchema = z.object({
+    month: z.string().datetime(),
+    total: z.number(),
+});
+
+const YearTotalSchema = z.object({
+    year: z.string().datetime(),
+    total: z.number(),
+});
+
+const SummaryGroupSchema = z.object({
+    total: z.number(),
+    byMonth: z.array(MonthTotalSchema),
+    byDay: z.array(DayTotalSchema),
+    byYear: z.array(YearTotalSchema),
+    lastTransaction: lastTransactionSchema,
+});
+
+export const DashboardSummarySchema = z.object({
+    sales: SummaryGroupSchema,
+    purchases: SummaryGroupSchema,
+});
+export type DashboardSummary = z.infer<typeof DashboardSummarySchema>;
+
 //schema and type generals
 export const ResponseMsgAPISchema = z.string();
 
