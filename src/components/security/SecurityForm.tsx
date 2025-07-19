@@ -6,7 +6,7 @@ import InputEmailsForm from '../Utils/InputEmailForm';
 import { useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateUserAPI } from '@/api/user/user';
-import Select from '../Utils/Select';
+import SelectAutocomplete from '../Utils/SelectAutocomplete';
 
 type SecurityFormProps = {
     user: User;
@@ -30,6 +30,7 @@ export default function SecurityForm({ user, onClose }: SecurityFormProps) {
     const {
         register,
         reset,
+        control,
         handleSubmit,
         formState: { errors },
     } = useForm({ defaultValues: initialValues });
@@ -50,8 +51,7 @@ export default function SecurityForm({ user, onClose }: SecurityFormProps) {
         },
     });
     const handleData = (formData: User) => {
-        const dataUser = { ...formData, roleId: +formData.roleId };
-        mutate(dataUser);
+        mutate(formData);
     };
 
     if (data)
@@ -94,17 +94,17 @@ export default function SecurityForm({ user, onClose }: SecurityFormProps) {
                             errors={errors}
                             register={register}
                         />
-                        <Select
+
+                        <SelectAutocomplete
                             title="Rol"
                             name="roleId"
+                            msg="El rol es obligatorio"
                             options={data.map((role) => ({
                                 value: role.id,
                                 label: role.name,
                             }))}
-                            msg="El rol es obligatorio"
                             isReadOnly={false}
-                            errors={errors}
-                            register={register}
+                            control={control}
                         />
                     </div>
                     <div className="flex justify-center pt-5">
