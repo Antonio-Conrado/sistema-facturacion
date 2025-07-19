@@ -18,7 +18,7 @@ export async function getSuppliersAPI() {
 
 export async function CreateSupplierAPI(formData: Supplier) {
     try {
-        const { id, status, ...supplier } = formData;
+        const { id: _id, status: _status, ...supplier } = formData;
         const { data } = await api.post<string>('/suppliers', supplier);
         return data;
     } catch (error) {
@@ -30,7 +30,7 @@ export async function CreateSupplierAPI(formData: Supplier) {
 
 export async function UpdateSupplierAPI(formData: Supplier) {
     try {
-        const { status, ...supplier } = formData;
+        const { status: _status, ...supplier } = formData;
         const { data } = await api.put<string>(
             `/suppliers/${formData.id}`,
             supplier,

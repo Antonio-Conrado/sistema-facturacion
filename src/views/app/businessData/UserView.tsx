@@ -48,7 +48,7 @@ export default function UserView() {
     });
 
     const handleData = (formData: User) => {
-        const { image, roles, ...data } = formData;
+        const { image: _image, roles: _roles, ...data } = formData;
         mutationData.mutate(data);
     };
 

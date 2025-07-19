@@ -86,7 +86,7 @@ export async function SuspendUserAPI(id: number) {
 
 export async function createUserAPI(formData: User) {
     try {
-        const { id, ...dataUser } = formData;
+        const { id: _id, ...dataUser } = formData;
         const { data } = await api.post<string>('/user/create-user/', dataUser);
         return data;
     } catch (error) {

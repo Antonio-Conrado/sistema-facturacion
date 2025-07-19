@@ -18,8 +18,7 @@ export async function getBanksAPI() {
 
 export async function CreateBankAPI(formData: Bank) {
     try {
-        const { id, status, ...bank } = formData;
-        const { data } = await api.post<string>('/banks', bank);
+        const { data } = await api.post<string>('/banks', formData.name);
         return data;
     } catch (error) {
         if (isAxiosError(error) && error.response) {
@@ -30,8 +29,10 @@ export async function CreateBankAPI(formData: Bank) {
 
 export async function UpdateBankAPI(formData: Bank) {
     try {
-        const { status, ...bank } = formData;
-        const { data } = await api.put<string>(`/banks/${formData.id}`, bank);
+        const { data } = await api.put<string>(
+            `/banks/${formData.id}`,
+            formData.name,
+        );
         return data;
     } catch (error) {
         console.log(error);

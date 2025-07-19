@@ -18,7 +18,7 @@ export async function getCategoriesAPI() {
 
 export async function CreateCategoryAPI(formData: Category) {
     try {
-        const { id, status, ...category } = formData;
+        const { id: _id, status: _status, ...category } = formData;
         const { data } = await api.post<string>('/categories', category);
         return data;
     } catch (error) {
@@ -30,7 +30,7 @@ export async function CreateCategoryAPI(formData: Category) {
 
 export async function UpdateCategoryAPI(formData: Category) {
     try {
-        const { status, ...category } = formData;
+        const { status: _status, ...category } = formData;
         const { data } = await api.put<string>(
             `/categories/${formData.id}`,
             category,

@@ -19,6 +19,7 @@ export default function InputSearch<T>({
 
     // 'targetObject' is an individual element from the 'data' array.
     // 'path' is a string representing the nested path (example., 'address.city') used to access a specific property.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const getPropertyValueByPath = (targetObject: any, path: string) => {
         return path
             .split('.')
