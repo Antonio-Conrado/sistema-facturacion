@@ -28,7 +28,7 @@ export default function BasicTable<T>({
     children,
     disablePagination,
 }: BasicTableProps<T>) {
-    const handleChangePage = (event: unknown, newPage: number) => {
+    const handleChangePage = (_event: unknown, newPage: number) => {
         setPage(newPage);
     };
 

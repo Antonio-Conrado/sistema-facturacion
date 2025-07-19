@@ -48,7 +48,7 @@ export default function BusinessDataView() {
     });
 
     const handleData = (formData: BusinessData) => {
-        const { image, ...data } = formData;
+        const { image: _image, ...data } = formData;
         mutationData.mutate(data);
     };
 

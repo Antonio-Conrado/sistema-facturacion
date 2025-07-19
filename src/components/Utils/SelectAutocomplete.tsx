@@ -41,7 +41,7 @@ export default function SelectAutocomplete<T extends FieldValues>({
                         <Autocomplete
                             disablePortal
                             options={options}
-                            onChange={(e, data) =>
+                            onChange={(_e, data) =>
                                 field.onChange(data?.value ?? null)
                             }
                             disabled={isReadOnly}
