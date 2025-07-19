@@ -8,67 +8,82 @@ import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../Utils/ErrorMessage';
 
 export default function RepeatPasswordForm({ token }: { token: string }) {
-    const toast = useToast()
-    const navigate = useNavigate()
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<AuthForm>({
+    const toast = useToast();
+    const navigate = useNavigate();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<AuthForm>({
         defaultValues: {
             password: '',
-            repeatPassword: ''
-        }
-    })
+            repeatPassword: '',
+        },
+    });
 
-    const password1 = watch('password')
+    const password1 = watch('password');
     const { mutate } = useMutation({
         mutationFn: resetPasswordByToken,
         onError: (error) => {
-            toast.error(error.message)
+            toast.error(error.message);
         },
         onSuccess: (data) => {
-            if (data) toast.success(data)
-            navigate('/login')
-        }
-    })
+            if (data) toast.success(data);
+            navigate('/login');
+        },
+    });
     const handleData = (formData: AuthForm) => {
-        const data = { formData, token }
-        mutate(data)
-    }
+        const data = { formData, token };
+        mutate(data);
+    };
     return (
         <>
-            <h2 className="text-2xl text-center pb-4 text-cyan-700">Restablecer cuenta</h2>
+            <h2 className="text-2xl text-center pb-4 text-cyan-700">
+                Restablecer cuenta
+            </h2>
 
             <form
                 onSubmit={handleSubmit(handleData)}
-                className='text-gray-700 flex flex-col justify-around gap-5 '
+                className="text-gray-700 flex flex-col justify-around gap-5 "
                 noValidate
             >
-                <InputPassword
-                    register={register}
-                    errors={errors}
-                />
+                <InputPassword register={register} errors={errors} />
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-1 md:gap-3">
-                    <label htmlFor="repeatPassword" className="md:w-20">Repetir Password:</label>
+                    <label htmlFor="repeatPassword" className="md:w-20">
+                        Repetir contraseña:
+                    </label>
                     <div className="flex-grow">
                         <input
                             type="password"
-                            className="rounded-sm p-1 border-2 w-full"
+                            placeholder="Repite contraseña"
+                            className={`border rounded-md p-2 w-full ${
+                                errors ? 'border-red-500' : ''
+                            }`}
                             {...register('repeatPassword', {
-                                required: 'Repetir password es obligatorio',
+                                required: 'Repetir contraseña es obligatorio',
                                 validate: (value) =>
-                                    value === password1 || 'Las contraseñas no coinciden',
+                                    value === password1 ||
+                                    'Las contraseñas no coinciden',
                                 minLength: {
                                     value: 6,
-                                    message: 'La contraseña debe tener al menos 6 caracteres',
+                                    message:
+                                        'La contraseña debe tener al menos 6 caracteres',
                                 },
                             })}
                         />
-                        {errors.repeatPassword && <ErrorMessage>{errors.repeatPassword.message}</ErrorMessage>}
+                        {errors.repeatPassword && (
+                            <ErrorMessage>
+                                {errors.repeatPassword.message}
+                            </ErrorMessage>
+                        )}
                     </div>
                 </div>
 
                 <input
                     type="submit"
-                    className='btn-primary'
-                    value={'Restablecer password'}
+                    className="btn-primary"
+                    value={'Restablecer contraseña'}
                 />
             </form>
         </>

@@ -51,7 +51,7 @@ export default function LoginViews() {
 
             <form
                 onSubmit={handleSubmit(handleData)}
-                className="text-gray-700 flex flex-col justify-around gap-5 "
+                className="grid grid-cols-1 gap-4 pt-5 w-[240px] sm:w-full"
                 noValidate
             >
                 <InputEmail register={register} errors={errors} />
