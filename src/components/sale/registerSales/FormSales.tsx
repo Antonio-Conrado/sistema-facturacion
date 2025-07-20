@@ -180,7 +180,7 @@ export default function FormSales({
                             register={register}
                             validate={{
                                 validate: (value) => {
-                                    if (+value <= 0 || +value >= 50) {
+                                    if (+value < 0 || +value > 50) {
                                         return 'El descuento debe estar en el rango de 0% - 50%';
                                     }
                                     return validateNumber(
