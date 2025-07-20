@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import useToast from '@/hooks/useNotifications';
@@ -57,14 +56,9 @@ export default function useProductForm({
     const {
         register,
         control,
-        reset,
         handleSubmit,
         formState: { errors },
     } = useForm({ defaultValues: initialValues });
-
-    useEffect(() => {
-        reset(initialValues);
-    }, [onClose]);
 
     const { mutate } = useMutation({
         mutationFn:

@@ -4,7 +4,6 @@ import { ModalAction } from '@/data/index';
 import useToast from '@/hooks/useNotifications';
 import { Category } from '@/types/index';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 type CategoryFormProps = {
@@ -29,14 +28,9 @@ export default function CategoryForm({
     };
     const {
         register,
-        reset,
         handleSubmit,
         formState: { errors },
     } = useForm({ defaultValues: initialValues });
-
-    useEffect(() => {
-        reset(initialValues); //if modal is close, reset form
-    }, [onClose]);
 
     const { mutate } = useMutation({
         mutationFn:
