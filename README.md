@@ -2,6 +2,22 @@
 
 This repository contains the frontend of the billing system.
 
+## Online Demo
+
+The frontend demo is available at:  
+[https://nicafact.netlify.app/](https://nicafact.netlify.app/)
+
+---
+
+## Test Users
+
+To try out the system, you can use the following demo credentials:
+
+| Name   | Role          | Email              | Password |
+| ------ | ------------- | ------------------ | -------- |
+| John   | Administrator | correo@correo.com  | Abc123   |
+| Nicole | Employee      | correo1@correo.com | Abc123   |
+
 For the backend, visit:  
 https://github.com/Antonio-Conrado/Sistema-de-Facturacion-Backend
 
