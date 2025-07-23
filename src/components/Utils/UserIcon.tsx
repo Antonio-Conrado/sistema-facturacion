@@ -74,6 +74,17 @@ export default function UserIcon() {
                             </span>
                         </p>
                     </MenuItem>
+                    <MenuItem
+                        component="a"
+                        href="https://github.com/Antonio-Conrado/sistema-facturacion"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={handleClose}
+                    >
+                        <p className="text-blue-600 text-sm">
+                            Ver repositorio en GitHub
+                        </p>
+                    </MenuItem>
                     <MenuItem onClick={handleCloseSession}>
                         <p className="text-red-500 text-sm">Cerrar Sesión</p>
                     </MenuItem>
